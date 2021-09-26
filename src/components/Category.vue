@@ -1,6 +1,6 @@
 <template>
   <a-anchor class="anchorContainer">
-    <a-anchor-link :class="item.level|joinStr('anchor')" v-for="(item,index) in toc" :key="index"
+    <a-anchor-link  :class="item.level|joinStr('anchor')" v-for="(item,index) in toc" :key="index"
                    :title="item.content" :href="item.anchor|joinStr('#')"/>
   </a-anchor>
 </template>
@@ -50,10 +50,6 @@ export default {
 </script>
 
 <style>
-.anchorContainer {
-  text-align: left;
-  margin-left: 5px;
-}
 
 .anchor1 {
 }

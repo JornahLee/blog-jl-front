@@ -1,34 +1,36 @@
 <template>
   <div class="wrapper">
     <div class="header">
-      <div class="home">
-        <div>Jornah Lee</div>
-        <div>Love Life!</div>
-      </div>
-      <div class="tool-bar">搜索</div>
+      <slot name="header">
+        <h1>this is header</h1>
+      </slot>
     </div>
     <div class="container">
       <div class="left">
         <slot name="left"> 这里是左侧固定侧边栏</slot>
       </div>
       <div class="center">
-        <slot name="center">
-          this is center<br/><br/><br/><br/><br/><br/>
-          this is center<br/><br/><br/><br/><br/><br/>
-          this is center<br/><br/><br/><br/><br/><br/>
-          this is center<br/><br/><br/><br/><br/><br/>
-          this is center<br/><br/><br/><br/><br/><br/>
-          this is center<br/><br/><br/><br/><br/><br/>
-        </slot>
+        <div class="center-content">
+          <slot name="center">
+            this is center<br/><br/><br/><br/><br/><br/>
+            this is center<br/><br/><br/><br/><br/><br/>
+            this is center<br/><br/><br/><br/><br/><br/>
+            this is center<br/><br/><br/><br/><br/><br/>
+            this is center<br/><br/><br/><br/><br/><br/>
+            this is center<br/><br/><br/><br/><br/><br/>
+          </slot>
+        </div>
+
+        <div class="center-placeholder"></div>
       </div>
       <div class="right-bar">
         <slot name="right-bar">这里是 右侧 悬浮 侧边栏</slot>
       </div>
     </div>
+
     <div class="footer">
       <div>
-        <div>© 2019 - 2020 Jornah Lee</div>
-        <div>蜀ICP备20012827号-1</div>
+        <div>© 2019 - 2020 Jornah Lee | 蜀ICP备20012827号-1</div>
       </div>
       <a-back-top/>
     </div>
@@ -61,21 +63,9 @@ export default {
   /*border: 1px solid #e0d8d8;*/
 }
 
-.header > .home {
-  width: 10%;
-  height: 50px;
-  font-size: 16px;
-  color: white;
-  background-color: rgb(43, 43, 43);
-  float: left;
-}
-
-.header > .tool-bar {
-  float: right;
-}
 
 .container {
-  margin-top: 50px;
+  margin-top: 55px;
 }
 
 .left {
@@ -90,12 +80,21 @@ export default {
 .center {
   float: left;
   width: 65%;
-  /*height: 2000px;*/
-  /*background-color: #008000;*/
-  /*padding: 10px;*/
-  padding: 50px;
+
+
+}
+
+.center-content {
   background-color: #ffff;
   border: 1px solid #e0d8d8;
+  padding-left: 50px;
+  padding-top: 10px;
+  min-height: 85vh;
+}
+
+.center-placeholder {
+  height: 30px;
+  width: 100%;
 }
 
 .right-bar {
@@ -107,19 +106,22 @@ export default {
   /*border: 1px solid #e0d8d8;*/
   top: 100px;
   right: 10px;
+  background-color: white;
 
 }
 
 .footer {
+  position: fixed;
+  bottom: 0;
   width: 100%;
-  height: 50px;
+  height: 20px;
   /*line-height: 50px;*/
-  /*background-color: #FFFF00;*/
+  background-color: white;
   text-align: center;
   font-size: 10px;
   clear: both;
   border: 1px solid #e0d8d8;
 }
-
+/*this.$refs.body.scrollTop*/
 
 </style>

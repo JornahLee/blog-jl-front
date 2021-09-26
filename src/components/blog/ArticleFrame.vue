@@ -1,5 +1,5 @@
 <template>
-  <div class="article-frame-wrapper">
+  <div class="article-frame-wrapper" :key="articleId">
     <div class="article-title">{{ articleTitle }}</div>
     <hr/>
     <div class="article-content">
@@ -14,14 +14,14 @@
 <script>
 import VueMarkdown from 'vue-markdown'
 import bus from '@/components/bus/eventBus.js'
-import axios from "axios";
-
 
 export default {
-  name: 'Detail',
+  name: 'ArticleFrame',
   components: {
     VueMarkdown
   },
+  props: ['articleId']
+  ,
   data() {
     return {
       articleContent: "loading",
@@ -29,18 +29,29 @@ export default {
     }
   },
   mounted() {
-    axios
-        .get('http://localhost:8088/v2/article/get/64')
-        .then(response => {
-          this.articleContent = response.data.data.content;
-          this.articleTitle = response.data.data.title;
-          this.sendMsg();
-        })
-
+    this.getData();
   },
   methods: {
     sendMsg() {
       bus.$emit('share', this.articleContent)
+    },
+    getData() {
+      let url = '/blog/article/' + this.articleId
+      console.log(url);
+      this.$axios .get(url)
+          .then(response => {
+            const {article, tags, categories,} = response.data.data
+            this.articleContent = this.$defaultEmpty(article.content)
+            this.articleTitle = this.$defaultEmpty(article.title)
+            this.sendMsg();
+          })
+    }
+  },
+  watch: {
+    '$route'(to, from) { //监听路由是否变化
+      if (to !== from) {
+        this.getData()
+      }
     }
   }
 }
