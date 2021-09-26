@@ -37,3 +37,8 @@ vue 基本 组件 编写 注册 使用 父子组件传值 prop 兄弟组件间�
 
 
 在我的项目中 transition 使用fade 不生效， 没有透明度变化的效果。 不晓得为啥，但是使用translateX 这种平移效果可以
+
+
+性能优化
+- https://blog.csdn.net/qq493820798/article/details/104963877
+- 路由懒加载

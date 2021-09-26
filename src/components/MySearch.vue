@@ -22,8 +22,14 @@
   </div>
 </template>
 <script>
-
+// import Input from 'ant-design-vue/lib/input';
+// Vue.use(Input);
+// import Modal from 'ant-design-vue/lib/modal';
+// Vue.use(Modal);
 export default {
+  // components:{
+  //   Input,Modal
+  // },
   data() {
     return {
       showSearchResult: false,

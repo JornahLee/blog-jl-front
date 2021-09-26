@@ -1,9 +1,11 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import Vue from 'vue';
+
 // import Antd from 'ant-design-vue';
-import App from './App';
 // import 'ant-design-vue/dist/antd.css';
+
+// import Vue from 'vue';
+import App from './App';
 import axios from 'axios'
 import 'ant-design-vue/lib/button/style/css'
 import 'ant-design-vue/lib/input/style/css'
@@ -13,10 +15,17 @@ import 'ant-design-vue/lib/back-top/style/css'
 import 'ant-design-vue/lib/spin/style/css'
 import 'ant-design-vue/lib/pagination/style/css'
 import 'ant-design-vue/lib/anchor/style/css'
-import {BackTop, Input, Modal, Radio, Spin, Pagination,Anchor} from 'ant-design-vue';
 
+import Input from 'ant-design-vue/lib/input';
 Vue.use(Input);
+import Modal from 'ant-design-vue/lib/modal';
 Vue.use(Modal);
+import BackTop from 'ant-design-vue/lib/back-top';
+import Radio from 'ant-design-vue/lib/radio';
+import Spin from 'ant-design-vue/lib/spin';
+import Pagination from 'ant-design-vue/lib/pagination';
+import Anchor from 'ant-design-vue/lib/anchor';
+
 Vue.use(Radio);
 Vue.use(BackTop);
 Vue.use(Spin);
