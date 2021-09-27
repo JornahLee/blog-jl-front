@@ -42,3 +42,5 @@ vue 基本 组件 编写 注册 使用 父子组件传值 prop 兄弟组件间�
 性能优化
 - https://blog.csdn.net/qq493820798/article/details/104963877
 - 路由懒加载
+- npm run build --report BundleAnalyzerPlugin分析包体积 
+

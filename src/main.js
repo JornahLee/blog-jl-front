@@ -6,7 +6,7 @@
 
 // import Vue from 'vue';
 import App from './App';
-import axios from 'axios'
+// import axios from 'axios'
 import 'ant-design-vue/lib/button/style/css'
 import 'ant-design-vue/lib/input/style/css'
 import 'ant-design-vue/lib/modal/style/css'
