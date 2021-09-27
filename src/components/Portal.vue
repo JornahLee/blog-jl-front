@@ -8,12 +8,13 @@
         <router-link :to="'/detail/'+li.article.id">{{ li.article.title }}</router-link>
         <hr/>
       </div>
-    </div>
-    <div class="pagination">
-<!--      todo 这里有bug， 不知道为啥会闪一下-->
       <a-pagination :default-current="1" :total="total"
                     @change="getByPage"
                     :pageSize="pageSize" :current="pageNum"/>
+    </div>
+    <div class="pagination">
+<!--      todo 这里有bug， 不知道为啥会闪一下-->
+     <div>看 这里会闪一下</div>
     </div>
   </div>
 </template>

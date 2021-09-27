@@ -16,6 +16,10 @@ import 'ant-design-vue/lib/spin/style/css'
 import 'ant-design-vue/lib/pagination/style/css'
 import 'ant-design-vue/lib/anchor/style/css'
 
+import Affix from 'ant-design-vue/lib/affix';
+import 'ant-design-vue/lib/affix/style/css'
+Vue.use(Affix);
+
 import Input from 'ant-design-vue/lib/input';
 Vue.use(Input);
 import Modal from 'ant-design-vue/lib/modal';

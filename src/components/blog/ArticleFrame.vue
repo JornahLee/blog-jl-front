@@ -46,13 +46,6 @@ export default {
             this.sendMsg();
           })
     }
-  },
-  watch: {
-    '$route'(to, from) { //监听路由是否变化
-      if (to !== from) {
-        this.getData()
-      }
-    }
   }
 }
 </script>

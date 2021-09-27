@@ -1,10 +1,14 @@
 <template>
   <div class="wrapper">
-    <div class="header">
-      <slot name="header">
-        <h1>this is header</h1>
-      </slot>
-    </div>
+    <a-affix :offset-top="0" >
+      <div class="header">
+        <slot name="header">
+          <h1>this is header</h1>
+        </slot>
+      </div>
+<!--      <a-button>120px to affix top</a-button>-->
+    </a-affix>
+
     <div class="container">
       <div class="left">
         <slot name="left"> 这里是左侧固定侧边栏</slot>
@@ -51,8 +55,8 @@ export default {
 
 .header {
   width: 100%;
-  position: fixed;
-  top: 0;
+  /*position: fixed;*/
+  /*top: 0;*/
   height: 50px;
   /*line-height: 100px;*/
   background-color: #ffffff;
@@ -80,8 +84,6 @@ export default {
 .center {
   float: left;
   width: 65%;
-
-
 }
 
 .center-content {
@@ -89,7 +91,7 @@ export default {
   border: 1px solid #e0d8d8;
   padding-left: 50px;
   padding-top: 10px;
-  min-height: 85vh;
+  min-height: 70vh;
 }
 
 .center-placeholder {
@@ -122,6 +124,7 @@ export default {
   clear: both;
   border: 1px solid #e0d8d8;
 }
+
 /*this.$refs.body.scrollTop*/
 
 </style>
