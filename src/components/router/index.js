@@ -47,6 +47,12 @@ const routes = [
             tags: () => import('../Tags.vue'),
             blank: () => import('../Blank.vue')
         }
+    },
+    {
+        path: '/edit', components: {
+            tags: () => import('../Edit.vue'),
+            blank: () => import('../Blank.vue')
+        }
     }
 ]
 export default new VueRouter({

@@ -38,7 +38,7 @@ export default {
     getData() {
       let url = '/blog/article/' + this.articleId
       console.log(url);
-      this.$axios .get(url)
+      this.$axios.get(url)
           .then(response => {
             const {article, tags, categories,} = response.data.data
             this.articleContent = this.$defaultEmpty(article.content)
@@ -52,7 +52,11 @@ export default {
 
 <style>
 .article-frame-wrapper {
-  background-color: white;
+  background-color: #ffff;
+  border: 1px solid #e0d8d8;
+  padding-left: 50px;
+  padding-top: 10px;
+  min-height: 70vh;
 }
 
 .article-title {

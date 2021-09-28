@@ -6,7 +6,7 @@
           <h1>this is header</h1>
         </slot>
       </div>
-<!--      <a-button>120px to affix top</a-button>-->
+      <!--      <a-button>120px to affix top</a-button>-->
     </a-affix>
 
     <div class="container">
@@ -14,16 +14,14 @@
         <slot name="left"> 这里是左侧固定侧边栏</slot>
       </div>
       <div class="center">
-        <div class="center-content">
-          <slot name="center">
-            this is center<br/><br/><br/><br/><br/><br/>
-            this is center<br/><br/><br/><br/><br/><br/>
-            this is center<br/><br/><br/><br/><br/><br/>
-            this is center<br/><br/><br/><br/><br/><br/>
-            this is center<br/><br/><br/><br/><br/><br/>
-            this is center<br/><br/><br/><br/><br/><br/>
-          </slot>
-        </div>
+        <slot name="center">
+          this is center<br/><br/><br/><br/><br/><br/>
+          this is center<br/><br/><br/><br/><br/><br/>
+          this is center<br/><br/><br/><br/><br/><br/>
+          this is center<br/><br/><br/><br/><br/><br/>
+          this is center<br/><br/><br/><br/><br/><br/>
+          this is center<br/><br/><br/><br/><br/><br/>
+        </slot>
 
         <div class="center-placeholder"></div>
       </div>
@@ -84,14 +82,6 @@ export default {
 .center {
   float: left;
   width: 65%;
-}
-
-.center-content {
-  background-color: #ffff;
-  border: 1px solid #e0d8d8;
-  padding-left: 50px;
-  padding-top: 10px;
-  min-height: 70vh;
 }
 
 .center-placeholder {

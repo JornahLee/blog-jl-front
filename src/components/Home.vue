@@ -24,6 +24,9 @@
         <div class="to-index">
           <router-link to="/xxxx">首页</router-link>
         </div>
+        <div class="to-edit">
+          <router-link to="/edit">编辑</router-link>
+        </div>
       </div>
     </template>
 
@@ -42,6 +45,7 @@
         <router-view name="about"></router-view>
         <router-view name="c2"></router-view>
         <router-view name="c1"></router-view>
+        <router-view name="edit"></router-view>
       </transition>
 
     </template>
