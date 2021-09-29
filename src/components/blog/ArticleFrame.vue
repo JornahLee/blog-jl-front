@@ -1,9 +1,17 @@
 <template>
   <div class="article-frame-wrapper" :key="articleId">
-    <div class="article-title">{{ articleTitle }}</div>
+    <div class="article-title">{{ article.title }}</div>
+    <div class="meta-info">
+      <span>分类: x </span>|
+      <span>标签: x </span>|
+      <span>创建: {{ article.created|dateFormat }} </span>|
+      <span>更新: {{ article.updated|dateFormat }}</span>|
+      <span>状态: {{ article.status }}</span>|
+      <router-link :to="article.id|joinStrBefore('/edit/')">编辑</router-link>
+    </div>
     <hr/>
     <div class="article-content">
-      <vue-markdown class="markdown" :source="articleContent" :toc-anchor-link-symbol="''"
+      <vue-markdown class="markdown" :source="article.content" :toc-anchor-link-symbol="''"
                     :toc="true" :toc-first-level="1"></vue-markdown>
     </div>
     <hr/>
@@ -24,8 +32,10 @@ export default {
   ,
   data() {
     return {
-      articleContent: "loading",
-      articleTitle: "loading"
+      article: {
+        content: "loading",
+        title: "loading",
+      }
     }
   },
   mounted() {
@@ -33,16 +43,15 @@ export default {
   },
   methods: {
     sendMsg() {
-      bus.$emit('share', this.articleContent)
+      bus.$emit('share', this.article.content)
     },
     getData() {
       let url = '/blog/article/' + this.articleId
       console.log(url);
       this.$axios.get(url)
           .then(response => {
-            const {article, tags, categories,} = response.data.data
-            this.articleContent = this.$defaultEmpty(article.content)
-            this.articleTitle = this.$defaultEmpty(article.title)
+            const {article, tags, categories} = response.data.data
+            this.article = article
             this.sendMsg();
           })
     }
@@ -62,6 +71,10 @@ export default {
 .article-title {
   text-align: center;
   font-size: 30px;
+}
+
+.meta-info{
+  text-align: center;
 }
 
 .article-content {

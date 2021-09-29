@@ -25,7 +25,7 @@
           <router-link to="/xxxx">首页</router-link>
         </div>
         <div class="to-edit">
-          <router-link to="/edit">编辑</router-link>
+          <router-link to="/edit/1">编辑</router-link>
         </div>
       </div>
     </template>

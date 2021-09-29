@@ -49,9 +49,11 @@ const routes = [
         }
     },
     {
-        path: '/edit', components: {
-            tags: () => import('../Edit.vue'),
+        path: '/edit/:articleId', components: {
+            edit: () => import('../Edit.vue'),
             blank: () => import('../Blank.vue')
+        }, props: {
+            edit: true
         }
     }
 ]

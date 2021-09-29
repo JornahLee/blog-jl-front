@@ -44,3 +44,6 @@ vue 基本 组件 编写 注册 使用 父子组件传值 prop 兄弟组件间�
 - 路由懒加载
 - npm run build --report BundleAnalyzerPlugin分析包体积 
 
+
+注意踩坑
+watch与methods的定义顺序很重要， 不然会导致watch不生效

@@ -1,7 +1,7 @@
 <template>
   <a-anchor class="anchorContainer">
-    <a-anchor-link  :class="item.level|joinStr('anchor')" v-for="(item,index) in toc" :key="index"
-                   :title="item.content" :href="item.anchor|joinStr('#')"/>
+    <a-anchor-link  :class="item.level|joinStrBefore('anchor')" v-for="(item,index) in toc" :key="index"
+                   :title="item.content" :href="item.anchor|joinStrBefore('#')"/>
   </a-anchor>
 </template>
 
@@ -39,11 +39,6 @@ export default {
           })
           .render(markdownText)
       return retToc;
-    }
-  },
-  filters: {
-    joinStr(str2, str1) {
-      return str1 + str2;
     }
   }
 }
