@@ -58,6 +58,7 @@ export default {
   height: 50px;
   /*line-height: 100px;*/
   background-color: #ffffff;
+  /*background-color: red;*/
   text-align: center;
   font-size: 16px;
   clear: both;
@@ -73,7 +74,7 @@ export default {
 .left {
   float: left;
   width: 20%;
-  height: 200px;
+  min-height: 100px;
   /*background-color: #FF0000;*/
   margin-right: 5px;
 }

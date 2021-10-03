@@ -13,7 +13,13 @@
 
 // const Category = () => import('../Category.vue');
 const routes = [
-    {path: '/', redirect: '/detail'},
+    {path: '/', redirect: '/index'},
+    {
+        path: '/index', components: {
+            index: () => import('../Index.vue'),
+            blank: () => import('../Blank')
+        }
+    },
     {
         path: '/detail/:articleId', components: {
             category: () => import('../Category.vue'),
@@ -51,9 +57,22 @@ const routes = [
     {
         path: '/edit/:articleId', components: {
             edit: () => import('../Edit.vue'),
-            blank: () => import('../Blank.vue')
+            blank: () => import('../Blank.vue'),
+            editLeftSide: () => import('../admin/EditLeftSide.vue')
         }, props: {
             edit: true
+        }
+    },
+    {
+        path: '/music', components: {
+            music: () => import('../Music.vue'),
+            blank: () => import('../Blank.vue'),
+        }
+    },
+    {
+        path: '/login', components: {
+            login: () => import('../Login.vue'),
+            blank: () => import('../Blank.vue'),
         }
     }
 ]

@@ -34,6 +34,7 @@ vue 基本 组件 编写 注册 使用 父子组件传值 prop 兄弟组件间�
 
 路由 使用重定向完成 默认view
 路由 使用prop传参
+路由参数变化时，动画不生效， 使用key 进行标识
 
 
 在我的项目中 transition 使用fade 不生效， 没有透明度变化的效果。 不晓得为啥，但是使用translateX 这种平移效果可以
@@ -47,3 +48,7 @@ vue 基本 组件 编写 注册 使用 父子组件传值 prop 兄弟组件间�
 
 注意踩坑
 watch与methods的定义顺序很重要， 不然会导致watch不生效
+- vue-markdown 使用 prism代码高亮，
+  如果代码数据是从api获取的， 一定要延时之后再调用 `Prism.highlightAll()`， 否则vue还没渲染出来元素，Prism就会失效
+  
+prismjs 依赖："prismjs": "^1.25.0","babel-plugin-prismjs": "^2.1.0",

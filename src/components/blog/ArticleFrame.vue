@@ -7,7 +7,7 @@
       <span>创建: {{ article.created|dateFormat }} </span>|
       <span>更新: {{ article.updated|dateFormat }}</span>|
       <span>状态: {{ article.status }}</span>|
-      <router-link :to="article.id|joinStrBefore('/edit/')">编辑</router-link>
+      <router-link :to="article.id|joinStrBefore('/edit/')" v-if="sharedState.isLogin">编辑</router-link>
     </div>
     <hr/>
     <div class="article-content">
@@ -22,6 +22,8 @@
 <script>
 import VueMarkdown from 'vue-markdown'
 import bus from '@/components/bus/eventBus.js'
+import Prism from "prismjs";//引入插件
+import store from '../store'
 
 export default {
   name: 'ArticleFrame',
@@ -34,12 +36,17 @@ export default {
     return {
       article: {
         content: "loading",
-        title: "loading",
-      }
+        title: "loading"
+      },
+      sharedState: store.state
     }
   },
   mounted() {
     this.getData();
+    this.timer = setTimeout(() => {
+      Prism.highlightAll() // 这里加定时器让它后执行，不然没效果
+    }, 300)
+
   },
   methods: {
     sendMsg() {
@@ -73,7 +80,7 @@ export default {
   font-size: 30px;
 }
 
-.meta-info{
+.meta-info {
   text-align: center;
 }
 

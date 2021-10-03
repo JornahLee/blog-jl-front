@@ -1,8 +1,12 @@
 <template>
-  <a-anchor class="anchorContainer">
-    <a-anchor-link  :class="item.level|joinStrBefore('anchor')" v-for="(item,index) in toc" :key="index"
-                   :title="item.content" :href="item.anchor|joinStrBefore('#')"/>
-  </a-anchor>
+  <div>
+    <div class="cate-title">目录</div>
+    <hr/>
+    <a-anchor class="anchorContainer">
+      <a-anchor-link :class="item.level|joinStrBefore('anchor')" v-for="(item,index) in toc" :key="index"
+                     :title="item.content" :href="item.anchor|joinStrBefore('#')"/>
+    </a-anchor>
+  </div>
 </template>
 
 <script>
@@ -55,6 +59,12 @@ export default {
 
 .anchor3 {
   text-indent: 20px;
+}
+
+.cate-title {
+  text-align: left;
+  margin-left: 10px;
+  font-size: 20px;
 }
 
 </style>

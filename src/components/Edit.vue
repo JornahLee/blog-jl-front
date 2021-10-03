@@ -1,5 +1,10 @@
 <template>
   <div>
+    <div class="edit-title">
+<!--      不知道为啥 :value="article.title" 为啥读不到， 明明data里都定义了 很奇怪-->
+      <a-input size="large" placeholder="这里是标题" :value="article?article.title:''" addonBefore="标题"/>
+    </div>
+    <br/>
     <textarea id="simpleMde"></textarea>
   </div>
 </template>
@@ -12,14 +17,16 @@ export default {
   name: "Edit",
   data() {
     return {
-      article: {},
+      article: {
+        title: ""
+      },
       simplemde: {}
     }
   },
   props: ['articleId'],
   mounted() {
     this.initEditor();
-    if (this.articleId != null) {
+    if (this.articleId !== -1) {
       this.getArticle(this.articleId)
     }
   },
@@ -99,3 +106,12 @@ export default {
   }
 }
 </script>
+
+<style>
+
+.edit-title {
+  text-align: center;
+  font-size: 30px;
+}
+
+</style>
