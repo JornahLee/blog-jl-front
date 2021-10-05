@@ -78,13 +78,29 @@ Vue.use(Spin);
 Vue.use(Pagination);
 Vue.use(Anchor);
 
+import message from 'ant-design-vue/lib/message'
+import 'ant-design-vue/lib/message/style/css'
+Vue.prototype.$message = message;
+message.config({
+    top: `50px`,
+    duration: 1,
+    maxCount: 3,
+});
+
+
+
 Vue.config.productionTip = false
 import myAxios from './components/config/myAxios'
+
 Vue.prototype.$axios = myAxios
 
-Vue.prototype.$defaultEmpty = function (input) {
-    return input == null ? "" : input;
-}
+import store from './components/store'
+
+Vue.prototype.$store = store
+
+import bus from '@/components/bus/eventBus.js'
+
+Vue.prototype.$bus = bus
 
 Vue.config.productionTip = false;
 
@@ -110,17 +126,19 @@ Vue.filter('dateFormat', function (dt) {
     return fmt;
 })
 
-Vue.filter('joinStrBefore', function (str2, str1) {
-    return str1 + str2;
+Vue.filter('joinStrBefore', function (source, param) {
+    return param + source;
 })
 
-Vue.filter('defaultValue', function (str) {
-    return "";
+Vue.filter('defaultValue', function (source, defaultValue) {
+    if (source === undefined || source == null) {
+        return defaultValue;
+    }
+    return source;
 })
 
 // Vue.use(Antd);
 import router from '@/components/router'
-
 
 new Vue({
     el: '#app',

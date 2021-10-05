@@ -21,9 +21,7 @@
 
 <script>
 import VueMarkdown from 'vue-markdown'
-import bus from '@/components/bus/eventBus.js'
-import Prism from "prismjs";//引入插件
-import store from '../store'
+import Prism from "prismjs"; //引入插件
 
 export default {
   name: 'ArticleFrame',
@@ -38,7 +36,7 @@ export default {
         content: "loading",
         title: "loading"
       },
-      sharedState: store.state
+      sharedState: this.$store.state
     }
   },
   mounted() {
@@ -50,15 +48,13 @@ export default {
   },
   methods: {
     sendMsg() {
-      bus.$emit('share', this.article.content)
+      this.$bus.$emit('share', this.article.content)
     },
     getData() {
       let url = '/blog/article/' + this.articleId
-      console.log(url);
       this.$axios.get(url)
           .then(response => {
-            const {article, tags, categories} = response.data.data
-            this.article = article
+            this.article = response.data.data
             this.sendMsg();
           })
     }

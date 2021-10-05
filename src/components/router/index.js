@@ -38,6 +38,7 @@ const routes = [
     {
         path: '/blogPortal', components: {
             portal: () => import('../Portal.vue'),
+            articleNav: () => import('../ArticleNav.vue'),
             blank: () => import('../Blank.vue')
         }
     }

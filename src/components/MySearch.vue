@@ -47,15 +47,9 @@ export default {
         pageSize: 5,
         pageNum: 1
       }).then(response => {
-        console.log(response.data.data);
         this.searchHitInfoList = response.data.data
         this.showSearchResult = true
         this.resultSize = this.searchHitInfoList.length
-        // this.showNextPage = this.pageNum < totalPage
-        // const {url, title, bodyHitInfoList} = response.data.data
-        // this.url = url
-        // this.title = title
-        // this.bodyHitInfoList = bodyHitInfoList
       })
     }
   }

@@ -67,6 +67,7 @@
       <transition name="slide" mode="out-in">
         <!--        <my-nav></my-nav>-->
         <router-view name="editLeftSide"></router-view>
+        <router-view name="articleNav"></router-view>
       </transition>
     </template>
 
@@ -100,10 +101,9 @@
 import Category from '@/components/Category'
 import ArticleFrame from '@/components/blog/ArticleFrame'
 import MainFrame from '@/components/MainFrame'
-import MyNav from "@/components/MyNav";
+import ArticleNav from "@/components/ArticleNav";
 import MySearch from "./MySearch";
 import EditLeftSide from "./admin/EditLeftSide";
-import store from './store'
 
 // 通过兄弟组件之间刷新数据，
 // 但是我觉得这样不好，这样子打破封装了，不符合最少知识原则
@@ -111,19 +111,20 @@ export default {
   name: 'Detail',
   data() {
     return {
-      sharedState: store.state
+      sharedState: this.$store.state
     }
   },
   components: {
     EditLeftSide,
-    MySearch, MyNav,
+    MySearch, ArticleNav,
     MainFrame, Category, ArticleFrame
   },
   mounted() {
   },
   methods: {
     logout() {
-      store.resetState()
+      this.$store.resetState()
+      this.$message.success({content:"注销成功"})
     }
   }
 }

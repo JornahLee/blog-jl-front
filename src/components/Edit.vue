@@ -1,10 +1,34 @@
 <template>
   <div>
     <div class="edit-title">
-<!--      不知道为啥 :value="article.title" 为啥读不到， 明明data里都定义了 很奇怪-->
-      <a-input size="large" placeholder="这里是标题" :value="article?article.title:''" addonBefore="标题"/>
+      <a-input size="large" placeholder="这里是标题" v-model="article.title" addonBefore="标题"/>
     </div>
-    <br/>
+    <div class="info">
+      <div class="display-info">
+        <span class="display-info-item">创建: {{ article.created|defaultValue(new Date())|dateFormat }} </span>
+        <span class="display-info-item">更新: {{ article.updated|defaultValue(new Date())|dateFormat }}</span>
+      </div>
+      <!--      <div class="form-element">-->
+      <!--        <a-select-->
+      <!--            label-in-value-->
+      <!--            :default-value="{ key: 'draft' }"-->
+      <!--            style="width: 100%"-->
+      <!--            @change="handleChange"-->
+      <!--        >-->
+      <!--          <a-select-option value="draft">-->
+      <!--            草稿-->
+      <!--          </a-select-option>-->
+      <!--          <a-select-option value="publish">-->
+      <!--            发布-->
+      <!--          </a-select-option>-->
+      <!--        </a-select>-->
+      <!--      </div>-->
+      <!--      <div class="form-element">-->
+      <!--        <a-button id="saveButton" :loading="saving" @click="saveTitleAndContent">保存</a-button>-->
+      <!--      </div>-->
+
+    </div>
+    <!--    <br/>-->
     <textarea id="simpleMde"></textarea>
   </div>
 </template>
@@ -18,69 +42,96 @@ export default {
   data() {
     return {
       article: {
-        title: ""
+        title: '',
+        content: ''
       },
-      simplemde: {}
+      simplemde: {},
+      saving: false
     }
   },
   props: ['articleId'],
   mounted() {
     this.initEditor();
-    if (this.articleId !== -1) {
+    if (this.articleId !== (-1).toString()) {
       this.getArticle(this.articleId)
     }
   },
-  // watch与methods的定义顺序很重要， 不然会导致watch不生效
-  watch: {
-    'article.content': {
-      // 深度监听
-      handler: function (val, oldVal) { /* ... */
-        this.simplemde.value(val)
-      },
-      deep: true
-    }
+  created() {
+    this.$bus.$on('saveArticle', (status, meta) => {
+      let url = '/blog/article/save'
+      this.$axios.post()
+      console.log(status);
+      console.log(meta);
+      console.log('xxx');
+
+    })
   },
   methods: {
+    handleChange(value) {
+      console.log(`selected ${value}`);
+    },
+    saveTitleAndContent: function () {
+      let url = '/blog/article/saveOrUpdate'
+      const key = 'updatable';
+      this.$message.loading({content: '保存中...', key});
+      let params = {
+        id: this.article.id,
+        title: this.article.title,
+        content: this.simplemde.value()
+      }
+      this.saving = true;
+      this.$axios.post(url, params).then(resp => {
+        const {id} = resp.data.data
+        if (this.article.id === undefined) {
+          this.$router.push('/edit/' + id)
+        }
+        this.$message.success({content: '保存成功...', key, duration: 1});
+      }).catch(err => {
+        this.$message.success({content: '保存失败', key, duration: 1});
+      }).finally(() => {
+        this.saving = false
+      })
+    },
     getArticle: function (id) {
       this.$axios.get('/blog/article/' + id).then(resp => {
-        const {article} = resp.data.data
+        const article = resp.data.data
         this.article = article
+        this.simplemde.value(article.content)
+        this.$bus.$emit('articleEditMetaInit', article)
       })
     }
     ,
     initEditor: function () {
-      this.simplemde = new SimpleMDE({element: document.getElementById("simpleMde")})
-      this.simplemde.codemirror.on("paste", this.handlePaste);
+      this.simplemde = new SimpleMDE({
+        element: document.getElementById("simpleMde"),
+        spellChecker: false,
+        forceSync: true, //  用v-model 监听不到，不知道为啥
+        // 自定义 toolbar side by side有bug
+      })
+      const codemirror = this.simplemde.codemirror;
+      // simplemde shortcut not support custom toolbar
+      // so bind custom toolbar with shortcut
+      const keys = codemirror.getOption("extraKeys");
+      keys["Shift-Cmd-S"] = () => {
+        this.saveTitleAndContent()
+      };
+      codemirror.setOption("extraKeys", keys);
+
+      codemirror.on("paste", this.handlePaste);
     }
     ,
     // 粘贴监听图片上传
     handlePaste: function (editor, event) {
       let clipboardData = event.clipboardData || window.clipboardData
-      console.log(clipboardData) // 查看clipboardData
-      console.log("clipboardData") // 查看clipboardData
       const items = clipboardData.items
       const types = clipboardData.types
       let file = null
 
-      var text = clipboardData.getData('text/plain')
-      console.log("text" + text);
-
       // 搜索剪切板items
       for (let i = 0; i < items.length; i++) {
-        console.log(items[i])
         if (items[i].type.indexOf('image') !== -1) {
           file = items[i].getAsFile()
-          // break
-        } else {
-          // clipboardData.clearData(items[i].type)
-          var str = clipboardData.getData(items[i].type)
-          console.log(str)
         }
-      }
-
-      // 搜索剪切板types
-      for (let i = 0; i < types.length; i++) {
-        console.log(types[i])
       }
 
       if (!file) {
@@ -114,4 +165,26 @@ export default {
   font-size: 30px;
 }
 
+.info {
+  height: 32px;
+  /*background-color: #52c41a;*/
+  /*border-bottom: solid black 1px;*/
+}
+
+.display-info {
+  float: left;
+  margin-top: 10px;
+}
+
+.display-info-item {
+  margin-right: 5px;
+}
+
+.form-element {
+  float: right;
+}
+
+#saveButton {
+  color: dodgerblue;
+}
 </style>

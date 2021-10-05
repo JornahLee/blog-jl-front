@@ -23,8 +23,6 @@
 </template>
 <script>
 
-import store from './store'
-
 export default {
   data() {
     return {
@@ -32,12 +30,11 @@ export default {
         username: 'jornah',
         password: 'jornahlee',
       },
-      sharedState: store.state
+      sharedState: this.$store.state
     };
   },
   methods: {
     handleSubmit(e) {
-      console.log(this.formInline);
       this.login(this.username, this.password)
     },
     login(username, password) {
@@ -46,12 +43,12 @@ export default {
         headers: {"Authorization": ""}
       };
       this.$axios.post(url, this.formInline, config).then(resp => {
-        console.log(resp.data.data);
         let {accessToken, username, screenName, email} = resp.data.data
-        store.setIsLogin(true)
-        store.setUsername(username)
-        store.setToken(accessToken)
+        this.$store.setIsLogin(true)
+        this.$store.setUsername(username)
+        this.$store.setToken(accessToken)
         this.$router.push("/index")
+        this.$message.success({content:"登陆成功"})
       })
 
     }

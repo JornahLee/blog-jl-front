@@ -81,7 +81,6 @@ export default {
     },
     handleUpload() {
       const {fileList} = this;
-      console.log(fileList);
       const formData = new FormData();
       let file = fileList[0]
       formData.append('file', file);
@@ -96,11 +95,11 @@ export default {
           .then(() => {
             this.fileList = [];
             this.uploading = false;
-            console.log('upload successfully.');
+            this.$message.success({content:'upload successfully.'})
           })
           .catch(() => {
             this.uploading = false;
-            console.log('upload failed.');
+            this.$message.error({content:'upload failed.'})
           });
     },
   }

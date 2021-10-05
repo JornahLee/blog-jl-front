@@ -52,3 +52,5 @@ watch与methods的定义顺序很重要， 不然会导致watch不生效
   如果代码数据是从api获取的， 一定要延时之后再调用 `Prism.highlightAll()`， 否则vue还没渲染出来元素，Prism就会失效
   
 prismjs 依赖："prismjs": "^1.25.0","babel-plugin-prismjs": "^2.1.0",
+
+箭头函数没有this指向， 所以在箭头函数中 使用this 就可以指向 外部的vue

@@ -4,17 +4,17 @@
     <a-spin tip="Loading..." v-if="loading">
     </a-spin>
     <div>
-      <div v-for="li in articleList" :key="li.article.id">
-        <router-link :to="'/detail/'+li.article.id">{{ li.article.title }}</router-link>
+      <div v-for="li in articleList" :key="li.id">
+        <router-link :to="'/detail/'+li.id">{{ li.title }}</router-link>
         <hr/>
       </div>
-      <a-pagination :default-current="1" :total="total"
+      <a-pagination :default-current="1" :total="total" v-if="total>pageSize"
                     @change="getByPage"
                     :pageSize="pageSize" :current="pageNum"/>
     </div>
     <div class="pagination">
-<!--      todo 这里有bug， 不知道为啥会闪一下-->
-     <div>看 这里会闪一下</div>
+      <!--      todo 这里有bug， 不知道为啥会闪一下-->
+      <div>看 这里会闪一下</div>
     </div>
   </div>
 </template>
@@ -24,31 +24,55 @@ export default {
   data() {
     return {
       articleList: [],
-      pageSize: null,
-      pageNum: null,
+      pageSize: 10,
+      pageNum: 1,
       loading: false,
-      total:0,
+      total: 0,
+      selectInfo: {
+        type: '',
+        param: ''
+      }
+      //  all byTag byCate
     }
   },
   mounted() {
-    this.getByPage(1,10);
+    this.getByPage(1, 10);
+  },
+  created() {
+    this.$bus.$on('selectArticleByCondition', (type, param) => {
+      this.selectInfo.type = type
+      this.selectInfo.param = param
+      this.getByPage(1, 10)
+    })
   },
   methods: {
-    getByPage(pageNum,pageSize) {
+    getByPage(pageNum, pageSize) {
       this.loading = true;
-      let url = '/blog/article/list'
-      this.$axios.post(url, {
+      let config = {
         sortField: "updated",
         sort: "desc",
         pageSize: pageSize,
         pageNum: pageNum,
-
-      }).then(response => {
-        const {list, pageSize, pageNum,total, hasNextPage} = response.data.data
+        queryKeyColumns: {}
+      }
+      let url;
+      let selectInfo = this.selectInfo;
+      if (selectInfo.type === 'byTag') {
+        url = '/blog/article/list/byTag';
+        config.queryKeyColumns.byTag = selectInfo.param
+      } else if (selectInfo.type === 'byCate') {
+        url = '/blog/article/list/byCate';
+        config.queryKeyColumns.byCate = selectInfo.param
+      } else {
+        url = '/blog/article/list';
+      }
+      this.$axios.post(url, config).then(response => {
+        const {list, pageSize, pageNum, total, hasNextPage} = response.data.data
         this.articleList = list
         this.pageSize = pageSize
         this.pageNum = pageNum
         this.total = total
+      }).finally(() => {
         this.loading = false;
       })
     }
@@ -56,10 +80,11 @@ export default {
 }
 </script>
 <style>
-.title{
+.title {
   text-align: center;
   font-size: 30px;
 }
+
 .pagination {
   position: absolute;
   bottom: 0;

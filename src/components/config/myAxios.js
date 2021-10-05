@@ -1,7 +1,8 @@
 // 用了cdn 不用import axios
+import message from 'ant-design-vue/lib/message'
+// 无法使用 this.$store， 因为这里访问不到 全局的vue对象
 import store from '../store/index'
 
-let defaultToken = `eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEsImlhdCI6MTYzMzIzMzE4MSwiZXhwIjoxNjM1ODI1MTgxfQ.Pp82sTvaVWIyOYuMDIj7FvcQeAeJHaio4g_dT8zYXIA`
 axios.interceptors.request.use(
     config => {
         config.baseURL = 'http://localhost:8089'
@@ -10,8 +11,6 @@ axios.interceptors.request.use(
         if (token) {
             // 判断是否存在token，如果存在的话，则每个http header都加上token
             config.headers['Authorization'] = token;
-        } else {
-            config.headers['Authorization'] = defaultToken;
         }
         return config;
     },
@@ -31,14 +30,14 @@ axios.interceptors.response.use(resp => {
 }, err => {
     let resp = err.response
     if (resp.status === 504 || resp.status === 404) {
-        console.error({message: '服务器被吃了⊙﹏⊙∥'});
+        message.error({content: '服务器被吃了⊙﹏⊙∥'})
     } else if (resp.status === 403) {
-        console.error({message: '权限不足,请联系管理员!'});
+        message.error({content: '权限不足,请联系管理员!'});
     } else if (resp.status === 401) {
-        console.error({message: '未登录!'});
+        message.error({content: '未登录!'})
         store.resetState()
-    }else{
-        console.error({message: '未知错误!'});
+    } else {
+        message.error({content: '未知错误!'});
     }
     return Promise.resolve(err);
 })

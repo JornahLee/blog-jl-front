@@ -3,9 +3,11 @@
     <div class="item">
       <div class="label">分类:</div>
       <div class="input-box">
-        <a-select mode="tags" style="width: 100%" placeholder="文章分类" @change="handleChange">
-          <a-select-option v-for="i in 25" :key="(i + 9).toString(36) + i">
-            {{ (i + 9).toString(36) + i }}
+        <a-select  show-search style="width: 100%" placeholder="文章分类"
+                   :filter-option="filterOption"
+                   @change="handleChange">
+          <a-select-option v-for="cate in meta.categories" :key="cate.id.toString()">
+            {{ cate.name }}
           </a-select-option>
         </a-select>
       </div>
@@ -14,50 +16,19 @@
       <div class="label">标签:</div>
       <div class="input-box">
         <a-select mode="tags" style="width: 100%" placeholder="文章标签" @change="handleChange">
-          <a-select-option v-for="i in 25" :key="(i + 9).toString(36) + i">
-            {{ (i + 9).toString(36) + i }}
+          <a-select-option v-for="tag in meta.tags" :key="tag.id.toString()">
+            {{ tag.name }}
           </a-select-option>
         </a-select>
-      </div>
-    </div>
-    <div class="item">
-      <div class="label">状态:</div>
-      <div class="input-box">
-        <a-select
-            label-in-value
-            :default-value="{ key: 'lucy' }"
-            style="width: 100%"
-            @change="handleChange"
-        >
-          <a-select-option value="jack">
-            Jack (100)
-          </a-select-option>
-          <a-select-option value="lucy">
-            Lucy (101)
-          </a-select-option>
-        </a-select>
-      </div>
-    </div>
-    <div class="item">
-      <div class="label">创建时间:</div>
-      <div class="show-value">
-        xxx
-      </div>
-    </div>
-    <div class="item">
-      <div class="label">修改时间:</div>
-      <div class="show-value">
-        xxx
       </div>
     </div>
     <div class="item">
       <div class="label" hidden="true"></div>
       <div class="input-box">
-        <a-button type="primary" :loading="loading" @mouseenter="enterLoading">
+        <a-button @click="save">
           保存
         </a-button>
       </div>
-
     </div>
 
   </div>
@@ -65,11 +36,54 @@
 </template>
 <script>
 export default {
-  methods: {
-    handleChange(value) {
-      console.log(`selected ${value}`);
-    },
+  data() {
+    return {
+      article: {
+        title: '',
+        status: 'none',
+        created: new Date(),
+        updated: new Date()
+      },
+      meta: {
+        categories: [{id: 1, name: 'f1'}, {id: 2, name: 'f2'}, {id: 3, name: 'f3'}],
+        tags: [{id: 1, name: 't1'}, {id: 2, name: 't2'}, {id: 3, name: 't3'}],
+      }
+    }
   },
+  mounted() {
+    this.getAllTag();
+    this.getAllCategory();
+  },
+  methods: {
+    save() {
+      this.$bus.$emit('saveArticle', this.article.status, this.meta)
+    },
+    getAllTag: function () {
+      let url = '/blog/meta/tag/list'
+      this.$axios.get(url).then(resp => {
+        this.meta.tags = resp.data.data
+      })
+    },
+    getAllCategory: function () {
+      let url = '/blog/meta/category/list'
+      this.$axios.get(url).then(resp => {
+        this.meta.categories = resp.data.data
+      })
+    },
+    filterOption(input, option) {
+      return (
+          option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0
+      );
+    }
+  },
+  created() {
+    this.$bus.$on('articleEditMetaInit', article => {
+      console.log('articleEditMetaInit');
+      console.log(article);
+      console.log('articleEditMetaInit');
+      // this.article = article
+    })
+  }
 };
 </script>
 <style>
@@ -105,9 +119,4 @@ export default {
   width: 60%;
 }
 
-.show-value {
-  padding-top: 15px;
-  float: right;
-  width: 60%;
-}
 </style>

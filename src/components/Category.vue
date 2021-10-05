@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import bus from '@/components/bus/eventBus.js'
+
 import markdownIt from 'markdown-it'
 import toc from 'markdown-it-toc-and-anchor'
 
@@ -23,7 +23,7 @@ export default {
   mounted() {
   },
   created() {
-    bus.$on('share', val => {
+    this.$bus.$on('share', val => {
       this.toc = this.getToc(val);
     })
   }
