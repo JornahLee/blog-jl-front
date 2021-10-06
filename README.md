@@ -54,3 +54,5 @@ watch与methods的定义顺序很重要， 不然会导致watch不生效
 prismjs 依赖："prismjs": "^1.25.0","babel-plugin-prismjs": "^2.1.0",
 
 箭头函数没有this指向， 所以在箭头函数中 使用this 就可以指向 外部的vue
+
+milkdown 这款编辑器，很好用，和typora很像

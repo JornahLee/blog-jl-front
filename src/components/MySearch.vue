@@ -12,7 +12,9 @@
           <router-link :to="searchHit.url " @click.native="showSearchResult=false">{{ searchHit.title }}</router-link>
           <div v-for="hit in searchHit.bodyHitInfoList">
             <div class="my-hr"></div>
-            <div v-html="hit.hitContext"></div>
+            <router-link :to="searchHit.url " @click.native="showSearchResult=false">
+              <div class="body-hit-ctx" v-html="hit.hitContext"></div>
+            </router-link>
           </div>
         </div>
       </div>
@@ -73,5 +75,8 @@ export default {
   margin: 5px;
   background-color: #333;
   background-image: linear-gradient(to right, #ccc, #333, #ccc);
+}
+.body-hit-ctx{
+  color: black;
 }
 </style>

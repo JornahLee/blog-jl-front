@@ -2,10 +2,12 @@
   <main-frame>
     <template v-slot:header>
       <div>
-        <div class="home">
-          <div>Jornah Lee</div>
-          <div>Love Life!</div>
-        </div>
+        <router-link to="index">
+          <div class="home">
+            <div>Jornah Lee</div>
+            <div>Love Life!</div>
+          </div>
+        </router-link>
         <div class="search-bar">
           <my-search></my-search>
         </div>
@@ -124,7 +126,7 @@ export default {
   methods: {
     logout() {
       this.$store.resetState()
-      this.$message.success({content:"注销成功"})
+      this.$message.success({content: "注销成功"})
     }
   }
 }
@@ -159,6 +161,7 @@ export default {
   background-color: rgb(43, 43, 43);
   float: left;
 }
+
 
 .search-bar {
   margin-top: 10px;

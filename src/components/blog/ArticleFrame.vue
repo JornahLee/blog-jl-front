@@ -58,7 +58,14 @@ export default {
             this.sendMsg();
           })
     }
-  }
+  }, watch: {
+    //监听路由变化
+    '$route'(to, from) {
+      if (to.path !== from.path) {
+        this.getData()
+      }
+    }
+  },
 }
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="toc.length >0 ">
     <div class="cate-title">目录</div>
     <hr/>
     <a-anchor class="anchorContainer">
@@ -17,7 +17,7 @@ import toc from 'markdown-it-toc-and-anchor'
 export default {
   data() {
     return {
-      toc: {}
+      toc: []
     }
   },
   mounted() {
