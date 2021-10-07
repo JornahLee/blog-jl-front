@@ -8,27 +8,7 @@
         <span class="display-info-item">创建: {{ article.created|defaultValue(new Date())|dateFormat }} </span>
         <span class="display-info-item">更新: {{ article.updated|defaultValue(new Date())|dateFormat }}</span>
       </div>
-      <!--      <div class="form-element">-->
-      <!--        <a-select-->
-      <!--            label-in-value-->
-      <!--            :default-value="{ key: 'draft' }"-->
-      <!--            style="width: 100%"-->
-      <!--            @change="handleChange"-->
-      <!--        >-->
-      <!--          <a-select-option value="draft">-->
-      <!--            草稿-->
-      <!--          </a-select-option>-->
-      <!--          <a-select-option value="publish">-->
-      <!--            发布-->
-      <!--          </a-select-option>-->
-      <!--        </a-select>-->
-      <!--      </div>-->
-      <!--      <div class="form-element">-->
-      <!--        <a-button id="saveButton" :loading="saving" @click="saveTitleAndContent">保存</a-button>-->
-      <!--      </div>-->
-
     </div>
-    <!--    <br/>-->
     <textarea id="simpleMde"></textarea>
   </div>
 </template>
@@ -52,9 +32,7 @@ export default {
   props: ['articleId'],
   mounted() {
     this.initEditor();
-    if (this.articleId !== (-1).toString()) {
-      this.getArticle(this.articleId)
-    }
+    this.getArticle(this.articleId)
   },
   created() {
     this.$bus.$on('saveArticle', (status, meta) => {
@@ -94,7 +72,12 @@ export default {
     },
     getArticle: function (id) {
       this.$axios.get('/blog/article/' + id).then(resp => {
-        const article = resp.data.data
+        let article = resp.data.data
+        const defaultArticle = {
+          title: '',
+          content: ''
+        }
+        article = Object.keys(article).length === 0 ? defaultArticle : article;
         this.article = article
         this.simplemde.value(article.content)
         this.$bus.$emit('articleEditMetaInit', article)
@@ -153,6 +136,13 @@ export default {
           ch: startPoint.ch
         });
       });
+    }
+  }, watch: {
+    //监听路由变化
+    '$route'(to, from) {
+      if (to.path !== from.path) {
+        this.getArticle(this.articleId)
+      }
     }
   }
 }

@@ -55,11 +55,14 @@
             <!--          <router-link to="/edit/-1">新文章</router-link>-->
           </div>
 
-          <div class="to-blogPortal">
-            <router-link to="/blogPortal">博客</router-link>
+          <div class="to-articleList">
+            <router-link to="/articleList">博客</router-link>
           </div>
           <div class="to-index">
             <router-link to="/index">首页</router-link>
+          </div>
+          <div v-if="sharedState.isLogin" class="to-todoList">
+            <a @click="toTodoList">TODO</a>
           </div>
         </div>
       </div>
@@ -78,7 +81,7 @@
         <router-view name="articleFrame"></router-view>
         <router-view name="tags"></router-view>
         <router-view name="archive"></router-view>
-        <router-view name="portal"></router-view>
+        <router-view name="articleList"></router-view>
         <router-view name="about"></router-view>
         <router-view name="c2"></router-view>
         <router-view name="c1"></router-view>
@@ -127,6 +130,12 @@ export default {
     logout() {
       this.$store.resetState()
       this.$message.success({content: "注销成功"})
+    },
+    toTodoList() {
+      this.$router.push('/articleList');
+      this.timer = setTimeout(() => {
+        this.$bus.$emit('selectArticleByCondition', 'byCate', 1);
+      }, 200)
     }
   }
 }
@@ -172,7 +181,7 @@ export default {
 }
 
 
-.to-index, .to-blogPortal, .manage-drop, .other-drop, .to-login {
+.to-index, .to-articleList, .manage-drop, .other-drop, .to-login, .to-todoList {
   float: right;
   margin-left: 20px;
   margin-top: 20px;

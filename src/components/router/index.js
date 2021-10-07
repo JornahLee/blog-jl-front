@@ -3,7 +3,7 @@
 // import Blank from '@/components/Blank'
 // import About from '@/components/About'
 // import Category from '@/components/Category'
-// import Portal from '@/components/Portal'
+// import articleList from '@/components/articleList'
 // import Archive from '@/components/Archive'
 // import Tags from '@/components/Tags'
 // import C1 from '@/components/base/C1'
@@ -36,8 +36,8 @@ const routes = [
         }
     },
     {
-        path: '/blogPortal', components: {
-            portal: () => import('../Portal.vue'),
+        path: '/articleList', components: {
+            articleList: () => import('../ArticleList.vue'),
             articleNav: () => import('../ArticleNav.vue'),
             blank: () => import('../Blank.vue')
         }
@@ -77,9 +77,14 @@ const routes = [
         }
     }
 ]
-export default new VueRouter({
+const vueRouter =new VueRouter({
     //  路由变化时，滚动到顶部
     routes, scrollBehavior(to, from, savedPosition) {
         return {x: 0, y: 0}
     }
 })
+const vueRouterPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push (to) {
+    return vueRouterPush.call(this, to).catch(err => err)
+}
+export default vueRouter;

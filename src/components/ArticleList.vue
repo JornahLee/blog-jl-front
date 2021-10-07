@@ -1,5 +1,5 @@
 <template>
-  <div class="portal">
+  <div class="articleList">
     <div class="title">我的博客们</div>
     <a-spin tip="Loading..." v-if="loading">
     </a-spin>
