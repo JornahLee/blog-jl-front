@@ -36,10 +36,12 @@ const routes = [
         }
     },
     {
-        path: '/articleList', components: {
+        path: '/articleList/:isDefault', components: {
             articleList: () => import('../ArticleList.vue'),
             articleNav: () => import('../ArticleNav.vue'),
             blank: () => import('../Blank.vue')
+        }, props: {
+            articleList: true
         }
     }
     ,
@@ -77,14 +79,14 @@ const routes = [
         }
     }
 ]
-const vueRouter =new VueRouter({
+const vueRouter = new VueRouter({
     //  路由变化时，滚动到顶部
     routes, scrollBehavior(to, from, savedPosition) {
         return {x: 0, y: 0}
     }
 })
 const vueRouterPush = VueRouter.prototype.push
-VueRouter.prototype.push = function push (to) {
+VueRouter.prototype.push = function push(to) {
     return vueRouterPush.call(this, to).catch(err => err)
 }
 export default vueRouter;

@@ -29,14 +29,22 @@ export default {
       loading: false,
       total: 0,
       selectInfo: {
-        type: '',
+        type: 'all',
         param: ''
       }
       //  all byTag byCate
     }
   },
+  props: ['isDefault']
+  ,
   mounted() {
-    this.getByPage(1, 10);
+    console.log(this.isDefault);
+    console.log(typeof this.isDefault);
+    if (this.isDefault === 'true') {
+      this.getByPage(1, 10);
+
+    }
+
   },
   created() {
     this.$bus.$on('selectArticleByCondition', (type, param) => {

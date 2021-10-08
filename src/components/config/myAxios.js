@@ -5,8 +5,8 @@ import store from '../store/index'
 
 axios.interceptors.request.use(
     config => {
-        config.baseURL = 'http://localhost:8089'
-        // config.baseURL = 'http://132.232.81.70:8089'
+        // config.baseURL = 'http://localhost:8089'
+        config.baseURL = 'http://132.232.81.70:8089'
         const token = store.state.token
         if (token) {
             // 判断是否存在token，如果存在的话，则每个http header都加上token
@@ -19,7 +19,13 @@ axios.interceptors.request.use(
     }
 );
 axios.interceptors.response.use(resp => {
-    // let apiResp=resp.data
+    // let apiResp=resp.data.data
+    // console.log(apiResp);
+    // console.log(apiResp.length <= 0);
+    // console.log(Object.keys(apiResp).length === 0);
+    // if (apiResp.length <= 0 || Object.keys(apiResp).length === 0) {
+    //     message.succcess({content: '这里啥也没有'})
+    // }
     // console.log(resp);
     // console.log('resp');
     // if (resp.status && resp.status === 200 && resp.data.status === 'error') {

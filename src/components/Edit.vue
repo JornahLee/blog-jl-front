@@ -34,16 +34,6 @@ export default {
     this.initEditor();
     this.getArticle(this.articleId)
   },
-  created() {
-    this.$bus.$on('saveArticle', (status, meta) => {
-      let url = '/blog/article/save'
-      this.$axios.post()
-      console.log(status);
-      console.log(meta);
-      console.log('xxx');
-
-    })
-  },
   methods: {
     handleChange(value) {
       console.log(`selected ${value}`);

@@ -56,7 +56,7 @@
           </div>
 
           <div class="to-articleList">
-            <router-link to="/articleList">博客</router-link>
+            <router-link to="/articleList/true">博客</router-link>
           </div>
           <div class="to-index">
             <router-link to="/index">首页</router-link>
@@ -110,10 +110,8 @@ import ArticleNav from "@/components/ArticleNav";
 import MySearch from "./MySearch";
 import EditLeftSide from "./admin/EditLeftSide";
 
-// 通过兄弟组件之间刷新数据，
-// 但是我觉得这样不好，这样子打破封装了，不符合最少知识原则
 export default {
-  name: 'Detail',
+  name: 'Home',
   data() {
     return {
       sharedState: this.$store.state
@@ -132,9 +130,10 @@ export default {
       this.$message.success({content: "注销成功"})
     },
     toTodoList() {
-      this.$router.push('/articleList');
+      this.$router.push('/articleList/false');
       this.timer = setTimeout(() => {
-        this.$bus.$emit('selectArticleByCondition', 'byCate', 1);
+        let todoCateId = 40;
+        this.$bus.$emit('selectArticleByCondition', 'byCate', todoCateId);
       }, 200)
     }
   }
