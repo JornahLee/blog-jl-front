@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <a-affix :offset-top="0" >
+    <a-affix :offset-top="0">
       <div class="header">
         <slot name="header">
           <h1>this is header</h1>
@@ -28,6 +28,7 @@
       <div class="right-bar">
         <slot name="right-bar">这里是 右侧 悬浮 侧边栏</slot>
       </div>
+
     </div>
 
     <div class="footer">
@@ -35,18 +36,30 @@
         <div>© 2019 - 2020 Jornah Lee | 蜀ICP备20012827号-1</div>
       </div>
       <a-back-top/>
+      <vue-live2d class="ban-niang"></vue-live2d>
     </div>
   </div>
 </template>
 
 <script>
+import vueLive2d from 'vue-live2d'
 
 export default {
-  name: 'MainFrame'
+  name: 'MainFrame',
+  components: {
+    vueLive2d
+  }
 }
 </script>
 
 <style>
+.ban-niang {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 10;
+}
+
 .wrapper {
   background-color: rgb(241, 242, 245);
 }

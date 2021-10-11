@@ -54,13 +54,13 @@
             </a-dropdown>
             <!--          <router-link to="/edit/-1">新文章</router-link>-->
           </div>
-
-          <div class="to-articleList">
-            <router-link to="/articleList/true">博客</router-link>
-          </div>
           <div class="to-index">
             <router-link to="/index">首页</router-link>
           </div>
+          <div class="to-articleList">
+            <router-link to="/articleList/true">博客</router-link>
+          </div>
+
           <div v-if="sharedState.isLogin" class="to-todoList">
             <a @click="toTodoList">TODO</a>
           </div>
