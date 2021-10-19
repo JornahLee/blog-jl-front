@@ -11,7 +11,7 @@
     </div>
     <hr/>
     <div class="article-content">
-      <vue-markdown class="markdown" :source="article.content" :toc-anchor-link-symbol="''"
+      <vue-markdown class="markdown" id="searchRoot" :source="article.content" :toc-anchor-link-symbol="''"
                     :toc="true" :toc-first-level="1"></vue-markdown>
     </div>
     <hr/>
@@ -28,7 +28,7 @@ export default {
   components: {
     VueMarkdown
   },
-  props: ['articleId']
+  props: ['articleId', 'headLineStr']
   ,
   data() {
     return {
@@ -41,12 +41,23 @@ export default {
   },
   mounted() {
     this.getData();
-    this.timer = setTimeout(() => {
-      Prism.highlightAll() // 这里加定时器让它后执行，不然没效果
-    }, 300)
-
   },
   methods: {
+    searchInPage() {
+      let searchRoot = document.getElementById('searchRoot')
+      for (let child of searchRoot.children) {
+        if (child.innerText.search(this.headLineStr) > -1) {
+          this.timer = setTimeout(() => {
+            child.scrollIntoView({
+              behavior: "smooth", // 默认 auto
+              block: "center", // 默认 center
+              inline: "nearest", // 默认 nearest
+            })
+          }, 500)
+          return;
+        }
+      }
+    },
     sendMsg() {
       this.$bus.$emit('share', this.article.content)
     },
@@ -56,13 +67,18 @@ export default {
           .then(response => {
             this.article = response.data.data
             this.sendMsg();
+            this.timer = setTimeout(() => {
+              this.searchInPage()
+              Prism.highlightAll()
+            }, 200)
+
           })
     }
   }, watch: {
     //监听路由变化
     '$route'(to, from) {
       if (to.path !== from.path) {
-        this.getData()
+        this.getData();
       }
     }
   },
@@ -89,6 +105,10 @@ export default {
 
 .article-content {
 
+}
+
+.hitCtx {
+  background-color: yellow;
 }
 
 

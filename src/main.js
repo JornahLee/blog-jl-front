@@ -80,13 +80,13 @@ Vue.use(Anchor);
 
 import message from 'ant-design-vue/lib/message'
 import 'ant-design-vue/lib/message/style/css'
+
 Vue.prototype.$message = message;
 message.config({
     top: `50px`,
     duration: 1,
     maxCount: 3,
 });
-
 
 
 Vue.config.productionTip = false
@@ -145,4 +145,7 @@ new Vue({
     components: {App},
     router,
     template: '<App/>',
+    mounted() {
+        window.location.hash = '/'
+    }
 });

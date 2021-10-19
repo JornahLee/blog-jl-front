@@ -56,3 +56,15 @@ prismjs 依赖："prismjs": "^1.25.0","babel-plugin-prismjs": "^2.1.0",
 箭头函数没有this指向， 所以在箭头函数中 使用this 就可以指向 外部的vue
 
 milkdown 这款编辑器，很好用，和typora很像
+
+
+vue 自定义指令， 涉及vnode， vnode.context 在未实际渲染时，操作vue的data 调用methods等
+
+todo:
+搜索结果栏，记住滚动条位置
+
+
+高亮某个div的实现做法， 类似弹窗
+- 使用一个遮罩(一个全屏div)，放在 高亮div的下一层
+
+那其实都用不上自定义指令

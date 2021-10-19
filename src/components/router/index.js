@@ -21,7 +21,7 @@ const routes = [
         }
     },
     {
-        path: '/detail/:articleId', components: {
+        path: '/detail/:articleId/:headLineStr?', components: {
             category: () => import('../Category.vue'),
             articleFrame: () => import('../blog/ArticleFrame.vue')
         }, props: {
