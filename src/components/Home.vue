@@ -64,6 +64,7 @@
           <div v-if="sharedState.isLogin" class="to-todoList">
             <a @click="toTodoList">TODO</a>
           </div>
+          <div class="show-recent"><a>最近访问</a></div>
         </div>
       </div>
     </template>
@@ -180,7 +181,7 @@ export default {
 }
 
 
-.to-index, .to-articleList, .manage-drop, .other-drop, .to-login, .to-todoList {
+.to-index, .to-articleList, .manage-drop, .other-drop, .to-login, .to-todoList, .show-recent {
   float: right;
   margin-left: 20px;
   margin-top: 20px;
