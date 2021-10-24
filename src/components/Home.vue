@@ -1,77 +1,16 @@
 <template>
   <main-frame>
     <template v-slot:header>
-      <div>
-        <router-link to="index">
-          <div class="home">
-            <div>Jornah Lee</div>
-            <div>Love Life!</div>
-          </div>
-        </router-link>
-        <div class="search-bar">
-          <my-search></my-search>
-        </div>
-        <div class="xxx-bar">
-          <div class="to-login" v-if="!sharedState.isLogin">
-            <router-link to="/login">登录</router-link>
-          </div>
-          <!--          <div v-else class="to-login">-->
-          <!--            <router-link to="/login">{{ sharedState.username }}</router-link>-->
-          <!--          </div>-->
-          <div class="manage-drop" v-else>
-            <a-dropdown>
-              <a class="ant-dropdown-link">
-                {{ sharedState.username }}
-                <a-icon type="down"/>
-              </a>
-              <a-menu slot="overlay">
-                <a-menu-item>
-                  <router-link to="/edit/-1">新文章</router-link>
-                </a-menu-item>
-                <a-menu-item>
-                  <router-link to="/music">音乐</router-link>
-                </a-menu-item>
-                <a-menu-item>
-                  <a @click="logout">注销</a>
-                </a-menu-item>
-              </a-menu>
-            </a-dropdown>
-          </div>
-          <div class="other-drop">
-            <a-dropdown>
-              <a class="ant-dropdown-link">
-                其他
-                <a-icon type="down"/>
-              </a>
-              <a-menu slot="overlay">
-                <a-menu-item>
-                  <router-link to="/about">关于</router-link>
-                </a-menu-item>
-                <a-menu-item>
-                  <router-link to="/archive">归档</router-link>
-                </a-menu-item>
-              </a-menu>
-            </a-dropdown>
-            <!--          <router-link to="/edit/-1">新文章</router-link>-->
-          </div>
-          <div class="to-index">
-            <router-link to="/index">首页</router-link>
-          </div>
-          <div class="to-articleList">
-            <router-link to="/articleList/true">博客</router-link>
-          </div>
+      <div v-if=""></div>
 
-          <div v-if="sharedState.isLogin" class="to-todoList">
-            <a @click="toTodoList">TODO</a>
-          </div>
-          <div class="show-recent"><a>最近访问</a></div>
-        </div>
-      </div>
+      <my-header v-if="windowWidth>600" class="my-header" :is-login="sharedState.isLogin"
+                 :username="sharedState.username"/>
+      <mobile-header v-else class="mobile-header"
+                     :is-login="sharedState.isLogin" :username="sharedState.username"/>
     </template>
 
     <template v-slot:left>
       <transition name="slide" mode="out-in">
-        <!--        <my-nav></my-nav>-->
         <router-view name="editLeftSide"></router-view>
         <router-view name="articleNav"></router-view>
       </transition>
@@ -108,50 +47,33 @@ import Category from '@/components/Category'
 import ArticleFrame from '@/components/blog/ArticleFrame'
 import MainFrame from '@/components/MainFrame'
 import ArticleNav from "@/components/ArticleNav";
-import MySearch from "./MySearch";
 import EditLeftSide from "./admin/EditLeftSide";
+import MyHeader from "./blog/MyHeader";
+import MobileHeader from "./blog/MobileHeader";
 
 export default {
   name: 'Home',
   data() {
     return {
-      sharedState: this.$store.state
+      sharedState: this.$store.state,
+      windowWidth: document.documentElement.clientWidth, //实时屏幕宽度
     }
   },
   components: {
     EditLeftSide,
-    MySearch, ArticleNav,
-    MainFrame, Category, ArticleFrame
+    ArticleNav,
+    MainFrame, Category, ArticleFrame,
+    MyHeader, MobileHeader
   },
   mounted() {
-  },
-  methods: {
-    logout() {
-      this.$store.resetState()
-      this.$message.success({content: "注销成功"})
-    },
-    toTodoList() {
-      this.$router.push('/articleList/false');
-      this.timer = setTimeout(() => {
-        let todoCateId = 40;
-        this.$bus.$emit('selectArticleByCondition', 'byCate', todoCateId);
-      }, 200)
-    }
+    window.addEventListener('resize', () => {
+      this.windowWidth = document.documentElement.clientWidth
+    })
   }
 }
 </script>
 
 <style>
-
-.left-inner {
-  float: right;
-  width: 60%;
-}
-
-.right-inner {
-  float: right;
-  width: 30%;
-}
 
 .slide-enter-active {
   transition: all .5s;
@@ -162,33 +84,5 @@ export default {
   transform: translateY(-20px);
 }
 
-.home {
-  width: 20%;
-  height: 50px;
-  font-size: 16px;
-  color: white;
-  background-color: rgb(43, 43, 43);
-  float: left;
-}
-
-
-.search-bar {
-  margin-top: 10px;
-  margin-left: 20px;
-  float: left;
-  width: 20%;
-  z-index: 9999;
-}
-
-
-.to-index, .to-articleList, .manage-drop, .other-drop, .to-login, .to-todoList, .show-recent {
-  float: right;
-  margin-left: 20px;
-  margin-top: 20px;
-}
-
-.xxx-bar {
-  margin-right: 20px;
-}
 
 </style>

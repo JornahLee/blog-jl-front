@@ -93,6 +93,11 @@ export default {
   padding-top: 10px;
   min-height: 70vh;
 }
+@media screen and (max-width: 400px) {
+  .article-frame-wrapper {
+    padding-left: 10px;
+  }
+}
 
 .article-title {
   text-align: center;

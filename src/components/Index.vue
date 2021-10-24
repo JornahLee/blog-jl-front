@@ -31,6 +31,6 @@ export default {
 </script>
 <style>
 .content {
-  background-color: wheat;
+  /*background-color: wheat;*/
 }
 </style>

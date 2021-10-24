@@ -36,7 +36,7 @@
         <div>© 2019 - 2020 Jornah Lee | 蜀ICP备20012827号-1</div>
       </div>
       <a-back-top/>
-      <vue-live2d class="ban-niang"></vue-live2d>
+      <vue-live2d class="ban-niang" :direction="'left'"></vue-live2d>
     </div>
   </div>
 </template>
@@ -55,7 +55,7 @@ export default {
 <style>
 .ban-niang {
   position: fixed;
-  bottom: 0;
+  bottom: -10px;
   left: 0;
   z-index: 10;
 }
@@ -81,7 +81,7 @@ export default {
 
 
 .container {
-  margin-top: 55px;
+  margin-top: 5px;
 }
 
 .left {
@@ -91,11 +91,21 @@ export default {
   /*background-color: #FF0000;*/
   margin-right: 5px;
 }
-
+@media screen and (max-width: 400px) {
+  .left {
+    display: none;
+  }
+}
 
 .center {
   float: left;
   width: 65%;
+}
+@media screen and (max-width: 400px) {
+  .center {
+    width: 100%;
+    padding: 10px;
+  }
 }
 
 .center-placeholder {
@@ -106,14 +116,18 @@ export default {
 .right-bar {
   float: right;
   width: 13%;
-  /*height: 200px;*/
-  /*background-color: #5F9EA0;*/
   position: fixed;
-  /*border: 1px solid #e0d8d8;*/
   top: 100px;
   right: 10px;
   background-color: white;
-
+}
+@media screen and (max-width: 400px) {
+  .right-bar {
+    display: none;
+  }
+  .ban-niang{
+    display: none;
+  }
 }
 
 .footer {
@@ -121,7 +135,6 @@ export default {
   bottom: 0;
   width: 100%;
   height: 20px;
-  /*line-height: 50px;*/
   background-color: white;
   text-align: center;
   font-size: 10px;
@@ -129,6 +142,5 @@ export default {
   border: 1px solid #e0d8d8;
 }
 
-/*this.$refs.body.scrollTop*/
 
 </style>

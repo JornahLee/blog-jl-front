@@ -113,6 +113,7 @@ export default {
 
 .search-input {
   z-index: 10;
+  /*width: 100%;*/
 }
 
 .search-result {
