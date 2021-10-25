@@ -1,21 +1,16 @@
 <template>
-  <div class="articleList">
+  <div class="article-body-wrapper">
     <div class="title">我的博客们</div>
     <a-spin tip="Loading..." v-if="loading">
     </a-spin>
-    <div>
-      <div v-for="li in articleList" :key="li.id">
+    <div class="articleList">
+      <div v-for="li in articleList" :key="li.id" class="articleName">
         <router-link :to="'/detail/'+li.id">{{ li.title }}</router-link>
-        <hr/>
       </div>
-      <a-pagination :default-current="1" :total="total" v-if="total>pageSize"
-                    @change="getByPage"
-                    :pageSize="pageSize" :current="pageNum"/>
     </div>
-    <div class="pagination">
-      <!--      todo 这里有bug， 不知道为啥会闪一下-->
-      <div>看 这里会闪一下</div>
-    </div>
+    <a-pagination :default-current="1" :total="total" v-if="total>pageSize"
+                  @change="getByPage"
+                  :pageSize="pageSize" :current="pageNum"/>
   </div>
 </template>
 
@@ -28,30 +23,11 @@ export default {
       pageNum: 1,
       loading: false,
       total: 0,
-      selectInfo: {
-        type: 'all',
-        param: ''
-      }
-      //  all byTag byCate
     }
   },
-  props: ['isDefault']
-  ,
+  props: ['type', 'value'],
   mounted() {
-    console.log(this.isDefault);
-    console.log(typeof this.isDefault);
-    if (this.isDefault === 'true') {
-      this.getByPage(1, 10);
-
-    }
-
-  },
-  created() {
-    this.$bus.$on('selectArticleByCondition', (type, param) => {
-      this.selectInfo.type = type
-      this.selectInfo.param = param
-      this.getByPage(1, 10)
-    })
+    this.getByPage(1, this.pageSize);
   },
   methods: {
     getByPage(pageNum, pageSize) {
@@ -64,13 +40,12 @@ export default {
         queryKeyColumns: {}
       }
       let url;
-      let selectInfo = this.selectInfo;
-      if (selectInfo.type === 'byTag') {
+      if (this.type === 'byTag') {
         url = '/blog/article/list/byTag';
-        config.queryKeyColumns.byTag = selectInfo.param
-      } else if (selectInfo.type === 'byCate') {
+        config.queryKeyColumns.byTag = this.value
+      } else if (this.type === 'byCate') {
         url = '/blog/article/list/byCate';
-        config.queryKeyColumns.byCate = selectInfo.param
+        config.queryKeyColumns.byCate = this.value
       } else {
         url = '/blog/article/list';
       }
@@ -84,6 +59,13 @@ export default {
         this.loading = false;
       })
     }
+  },
+  watch: {
+    '$route'(to, from) {
+      console.log(this.type);
+      console.log(this.value);
+      this.getByPage(1, this.pageSize);
+    }
   }
 }
 </script>
@@ -93,11 +75,19 @@ export default {
   font-size: 30px;
 }
 
-.pagination {
-  position: absolute;
-  bottom: 0;
-  left: 40%;
-  /*left: 0;*/
+.article-body-wrapper {
+  border: #e5e4e4 solid 1px;
+  border-radius: 10px;
+  padding: 10px;
 }
+.articleName{
+  border-bottom: 1px solid black;
+  margin-bottom: 10px;
+}
+
+.articleList {
+  height: 70vh;
+}
+
 </style>
 

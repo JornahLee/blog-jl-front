@@ -36,7 +36,7 @@ const routes = [
         }
     },
     {
-        path: '/articleList/:isDefault', components: {
+        path: '/articleList/:type/:value?', components: {
             articleList: () => import('../ArticleList.vue'),
             articleNav: () => import('../ArticleNav.vue'),
             blank: () => import('../Blank.vue')

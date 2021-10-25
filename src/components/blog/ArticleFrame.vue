@@ -15,7 +15,20 @@
                     :toc="true" :toc-first-level="1"></vue-markdown>
     </div>
     <hr/>
-    <div> 上一篇 下一篇</div>
+    <div>
+      <div>分类:
+        <span v-if="this.category!==null">
+          <router-link :to="'/articleList/byCate/'+this.category.id">{{ this.category.name }}</router-link>
+        </span>
+        <span v-else>无</span>
+      </div>
+      <div>标签:
+        <span v-if="this.tags!==null && tags.length>0">
+          <span v-for="tag in tags">{{ tag.name }}</span>
+        </span>
+        <span v-else>无</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -36,6 +49,8 @@ export default {
         content: "loading",
         title: "loading"
       },
+      category: null,
+      tags: null,
       sharedState: this.$store.state
     }
   },
@@ -62,6 +77,10 @@ export default {
       this.$bus.$emit('share', this.article.content)
     },
     getData() {
+      this.getArticleData();
+      this.getArticleMetaInfo();
+    },
+    getArticleData() {
       let url = '/blog/article/' + this.articleId
       this.$axios.get(url)
           .then(response => {
@@ -71,7 +90,16 @@ export default {
               this.searchInPage()
               Prism.highlightAll()
             }, 200)
-
+          })
+    },
+    getArticleMetaInfo() {
+      let url = `/blog/article//meta/${this.articleId}`
+      this.$axios.get(url)
+          .then(response => {
+            console.log(response);
+            const {category, tags} = response.data.data
+            this.category = category
+            this.tags = tags
           })
     }
   }, watch: {
@@ -93,6 +121,7 @@ export default {
   padding-top: 10px;
   min-height: 70vh;
 }
+
 @media screen and (max-width: 400px) {
   .article-frame-wrapper {
     padding-left: 10px;

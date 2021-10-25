@@ -27,9 +27,9 @@
             </a-menu-item>
 
             <a-menu-item>
-              <a @click="toTodoList">
+              <router-link to="/articleList/byCate/40">
                 <a-icon type="carry-out"/>
-              </a>
+              </router-link>
             </a-menu-item>
 
             <a-menu-item>
@@ -42,7 +42,7 @@
         <a-icon type="history"/>
       </div>
       <div class="to-articleList">
-        <router-link to="/articleList/true">
+        <router-link to="/articleList/all">
           <a-icon type="home"/>
         </router-link>
       </div>
@@ -63,13 +63,6 @@ export default {
     logout() {
       this.$store.resetState()
       this.$message.success({content: "注销成功"})
-    },
-    toTodoList() {
-      this.$router.push('/articleList/false');
-      this.timer = setTimeout(() => {
-        let todoCateId = 40;
-        this.$bus.$emit('selectArticleByCondition', 'byCate', todoCateId);
-      }, 200)
     }
   }
 }
@@ -89,20 +82,20 @@ export default {
 
 .search-bar {
   margin-top: 10px;
-  margin-left: 20px;
+  margin-left: 5px;
   float: left;
-  width: 35%;
+  width: 43%;
   z-index: 9999;
   background-color: yellow;
 }
 
 .xxx-bar {
-  margin-right: 20px;
+  margin-right: 10px;
 }
 
 .to-articleList, .manage-drop, .to-login, .show-recent {
   float: right;
-  margin-left: 10px;
+  margin-left: 7px;
   margin-top: 20px;
 }
 

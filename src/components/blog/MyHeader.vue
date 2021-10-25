@@ -48,15 +48,15 @@
         <!--          <router-link to="/edit/-1">新文章</router-link>-->
       </div>
       <div class="to-articleList">
-        <router-link to="/articleList/true">
+        <router-link to="/articleList/all">
           <a-icon type="home"/>
         </router-link>
       </div>
 
       <div v-if="isLogin" class="to-todoList">
-        <a @click="toTodoList">
+        <router-link to="/articleList/byCate/40">
           <a-icon type="carry-out"/>
-        </a>
+        </router-link>
       </div>
       <div class="show-recent">
         <a-icon type="history"/>
@@ -78,13 +78,6 @@ export default {
     logout() {
       this.$store.resetState()
       this.$message.success({content: "注销成功"})
-    },
-    toTodoList() {
-      this.$router.push('/articleList/false');
-      this.timer = setTimeout(() => {
-        let todoCateId = 40;
-        this.$bus.$emit('selectArticleByCondition', 'byCate', todoCateId);
-      }, 200)
     }
   }
 }
