@@ -109,7 +109,7 @@ export default {
 }
 .to-articleList, .manage-drop, .other-drop, .to-login, .to-todoList, .show-recent {
   float: right;
-  margin-left: 20px;
+  margin-left: 10px;
   margin-top: 20px;
 }
 
