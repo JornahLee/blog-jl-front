@@ -86,7 +86,7 @@ export default {
 }
 
 .articleList {
-  height: 60vh;
+  margin-bottom: 40px;
 }
 
 </style>

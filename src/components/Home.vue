@@ -57,6 +57,12 @@ export default {
     return {
       sharedState: this.$store.state,
       windowWidth: document.documentElement.clientWidth, //实时屏幕宽度
+      readStatistics: {
+        articleId: -1,
+        lastTimeSeconds: -1,
+        isReading: false,
+      }
+
     }
   },
   components: {
@@ -69,6 +75,52 @@ export default {
     window.addEventListener('resize', () => {
       this.windowWidth = document.documentElement.clientWidth
     })
+  },
+  methods: {
+    doReadStatistics(path) {
+      let now = new Date().getTime()
+      let mins = now - this.readStatistics.lastTimeSeconds;
+      if (/\/detail\/\d+/g.test(path) || /\/edit\/\d+/g.test(path)) {
+        let readingArticleId = path.split('/').pop()
+        if (this.readStatistics.articleId !== readingArticleId && this.readStatistics.isReading) {
+          // 更换阅读
+          this.saveStatisticsResult(this.readStatistics.articleId, mins, this.readStatistics.lastTimeSeconds)
+          this.readStatistics.lastTimeSeconds = now
+        }
+        if (!this.readStatistics.isReading) {
+          // 开始 阅读
+          this.readStatistics.lastTimeSeconds = now
+        }
+        this.readStatistics.isReading = true
+        this.readStatistics.articleId = readingArticleId
+
+      } else {
+        // 停止阅读
+        if (this.readStatistics.isReading) {
+          this.saveStatisticsResult(this.readStatistics.articleId, mins, this.readStatistics.lastTimeSeconds)
+        }
+        this.readStatistics.isReading = false
+      }
+    },
+    saveStatisticsResult(id, readDuration, startReadTime) {
+      if (readDuration / 1000 > 5) {
+        // 登录放云端，没登录放本地
+        // 现在先放云端吧，也就我一个人用，肯定登录了的
+        let url = '/blog/user/recently-read'
+        this.$axios.put(url, {
+          articleId: id,
+          readDuration: readDuration/1000,
+          startReadTime: startReadTime/1000
+        }).then(response => {
+
+        })
+      }
+    }
+  },
+  watch: {
+    '$route'(to, from) {
+      this.doReadStatistics(to.path)
+    }
   }
 }
 </script>

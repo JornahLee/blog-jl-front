@@ -45,7 +45,6 @@
             </a-menu-item>
           </a-menu>
         </a-dropdown>
-        <!--          <router-link to="/edit/-1">新文章</router-link>-->
       </div>
       <div class="to-articleList">
         <router-link to="/articleList/all">
@@ -58,22 +57,28 @@
           <a-icon type="carry-out"/>
         </router-link>
       </div>
-      <div class="show-recent">
-        <a-icon type="history"/>
-      </div>
+      <recent-read class="show-recent"></recent-read>
+
     </div>
   </div>
 </template>
 
 <script>
 import MySearch from "../MySearch";
+import RecentRead from "../header/RecentRead";
+
 
 export default {
   name: 'MyHeader',
   components: {
+    RecentRead,
     MySearch
   },
-  props:['isLogin','username'],
+  data() {
+    return {
+    }
+  },
+  props: ['isLogin', 'username'],
   methods: {
     logout() {
       this.$store.resetState()
@@ -107,10 +112,13 @@ export default {
 .xxx-bar {
   margin-right: 20px;
 }
+
 .to-articleList, .manage-drop, .other-drop, .to-login, .to-todoList, .show-recent {
   float: right;
   margin-left: 10px;
   margin-top: 20px;
 }
+
+
 
 </style>

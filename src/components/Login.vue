@@ -38,7 +38,7 @@ export default {
       this.login(this.username, this.password)
     },
     login(username, password) {
-      let url = '/blog/auth/login';
+      let url = '/blog/user/login';
       let config = {
         headers: {"Authorization": ""}
       };

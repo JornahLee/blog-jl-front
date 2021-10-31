@@ -118,7 +118,7 @@ export default {
 
 .search-result {
   z-index: 10;
-  position: fixed;
+  position: absolute;
   background-color: white;
   text-align: left;
   font-size: 12px;

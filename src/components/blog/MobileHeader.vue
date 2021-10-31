@@ -38,24 +38,24 @@
           </a-menu>
         </a-dropdown>
       </div>
-      <div class="show-recent">
-        <a-icon type="history"/>
-      </div>
       <div class="to-articleList">
         <router-link to="/articleList/all">
           <a-icon type="home"/>
         </router-link>
       </div>
+      <recent-read class="show-recent"></recent-read>
     </div>
   </div>
 </template>
 
 <script>
 import MySearch from "../MySearch";
+import RecentRead from "../header/RecentRead";
 
 export default {
   name: 'MobileHeader',
   components: {
+    RecentRead,
     MySearch
   },
   props: ['isLogin', 'username'],
