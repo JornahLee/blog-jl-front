@@ -38,6 +38,18 @@ vue 基本 组件 编写 注册 使用 父子组件传值 prop 兄弟组件间�
 
 
 在我的项目中 transition 使用fade 不生效， 没有透明度变化的效果。 不晓得为啥，但是使用translateX 这种平移效果可以
+```css
+/*这个版本可以*/
+.slide-enter-active {
+  transition: all .5s, opacity .5s;
+}
+
+.slide-enter {
+  /*transform: translateY(-20px);*/
+  transform: translateY(-20px);
+  opacity: 0;
+}
+```
 
 
 性能优化

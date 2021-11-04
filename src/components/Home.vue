@@ -21,7 +21,7 @@
         <router-view name="articleFrame"></router-view>
         <router-view name="tags"></router-view>
         <router-view name="archive"></router-view>
-        <router-view name="articleList"></router-view>
+        <router-view name="articleList" :key="fullPath"></router-view>
         <router-view name="about"></router-view>
         <router-view name="c2"></router-view>
         <router-view name="c1"></router-view>
@@ -63,6 +63,11 @@ export default {
         isReading: false,
       }
 
+    }
+  },
+  computed: {
+    fullPath() {
+      return this.$route.fullPath
     }
   },
   components: {
@@ -128,12 +133,13 @@ export default {
 <style>
 
 .slide-enter-active {
-  transition: all .5s;
+  transition: all .5s, opacity .5s;
 }
 
-.slide-enter /* .slide-leave-active below version 2.1.8 */
-{
+.slide-enter {
+  /*transform: translateY(-20px);*/
   transform: translateY(-20px);
+  opacity: 0;
 }
 
 
