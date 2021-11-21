@@ -6,7 +6,7 @@ import store from '../store/index'
 axios.interceptors.request.use(
     config => {
         // config.baseURL = 'http://localhost:8089'
-        config.baseURL = 'http://132.232.81.70:8089'
+        config.baseURL = 'http://api.ilearn.space:8089'
         const token = store.state.token
         if (token) {
             // 判断是否存在token，如果存在的话，则每个http header都加上token
