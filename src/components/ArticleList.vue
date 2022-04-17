@@ -27,9 +27,12 @@ export default {
   },
   props: ['type', 'value'],
   mounted() {
-    this.getByPage(1, this.pageSize);
+    this.getData();
   },
   methods: {
+    getData(){
+      this.getByPage(1, this.pageSize);
+    },
     getByPage(pageNum, pageSize) {
       this.loading = true;
       let config = {

@@ -46,18 +46,15 @@
           </a-menu>
         </a-dropdown>
       </div>
+      <div v-if="isLogin" class="to-todoList">
+        <todo></todo>
+      </div>
+      <recent-read class="show-recent"></recent-read>
       <div class="to-articleList">
         <router-link to="/articleList/all">
           <a-icon type="home"/>
         </router-link>
       </div>
-
-      <div v-if="isLogin" class="to-todoList">
-        <router-link to="/articleList/byCate/40">
-          <a-icon type="carry-out"/>
-        </router-link>
-      </div>
-      <recent-read class="show-recent"></recent-read>
 
     </div>
   </div>
@@ -66,13 +63,14 @@
 <script>
 import MySearch from "../MySearch";
 import RecentRead from "../header/RecentRead";
-
+import Todo from "../header/Todo"
 
 export default {
   name: 'MyHeader',
   components: {
     RecentRead,
-    MySearch
+    MySearch,
+    Todo
   },
   data() {
     return {

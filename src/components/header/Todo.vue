@@ -1,27 +1,25 @@
 <template>
   <div>
-    <a-icon type="history" style="color: #1890ff" @click="getRecentRead"/>
+    <a-icon type="carry-out" style="color: #1890ff" @click="getRecentRead" />
     <a-drawer
-        title="最近阅读"
+        title="Todo"
         placement="right"
         :closable="false"
         :visible="showRecentRead"
         :after-visible-change="afterVisibleChange"
         @close="onClose"
     >
-      <div v-for="item in recentRead" class="read-item">
-        <router-link :to="'/detail/'+item.articleId">- {{ item.title }}</router-link>
-        <div class="msg">{{ recentReadMsg(item.readDuration, item.startReadTime) }}</div>
-      </div>
+      <ArticleList type="byCate" value="40"/>
     </a-drawer>
   </div>
+
 </template>
 
 <script>
 import timeUtil from '../../utils/timeUtil'
-
+import ArticleList from "../ArticleList";
 export default {
-  components: {},
+  components: {ArticleList},
   data() {
     return {
       showRecentRead: false,

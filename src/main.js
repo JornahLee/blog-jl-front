@@ -78,6 +78,10 @@ Vue.use(Spin);
 Vue.use(Pagination);
 Vue.use(Anchor);
 
+import Drawer from 'ant-design-vue/lib/drawer'
+import 'ant-design-vue/lib/drawer/style/css'
+Vue.use(Drawer);
+
 import message from 'ant-design-vue/lib/message'
 import 'ant-design-vue/lib/message/style/css'
 
