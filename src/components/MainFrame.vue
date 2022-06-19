@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="frame-wrapper">
     <a-affix :offset-top="0">
       <div class="header">
         <slot name="header">
@@ -53,6 +53,10 @@ export default {
 </script>
 
 <style>
+body{
+  background-color: #eff0f5;
+}
+
 .ban-niang {
   position: fixed;
   bottom: -10px;
@@ -60,7 +64,7 @@ export default {
   z-index: 10;
 }
 
-.wrapper {
+.frame-wrapper {
   background-color: rgb(241, 242, 245);
 }
 
@@ -77,11 +81,12 @@ export default {
   clear: both;
   border-top: 1px solid #000000;
   /*border: 1px solid #e0d8d8;*/
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 
 .container {
-  margin-top: 5px;
+  margin-top: 20px;
 }
 
 .left {
@@ -100,6 +105,12 @@ export default {
 .center {
   float: left;
   width: 65%;
+  min-height: 79vh;
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 40px;
 }
 @media screen and (max-width: 400px) {
   .center {
@@ -131,8 +142,8 @@ export default {
 }
 
 .footer {
-  position: fixed;
-  bottom: 0;
+  /*position: fixed;*/
+  /*bottom: 0;*/
   width: 100%;
   height: 20px;
   background-color: white;

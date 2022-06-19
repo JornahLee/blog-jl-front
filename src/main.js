@@ -82,6 +82,10 @@ import Drawer from 'ant-design-vue/lib/drawer'
 import 'ant-design-vue/lib/drawer/style/css'
 Vue.use(Drawer);
 
+import Tag from 'ant-design-vue/lib/tag'
+import 'ant-design-vue/lib/tag/style/css'
+Vue.use(Tag);
+
 import message from 'ant-design-vue/lib/message'
 import 'ant-design-vue/lib/message/style/css'
 

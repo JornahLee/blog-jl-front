@@ -1,5 +1,5 @@
 <template>
-  <div v-if="toc.length >0 ">
+  <div v-if="toc.length >0 " class="cate">
     <div class="cate-title">目录</div>
     <hr/>
     <a-anchor class="anchorContainer">
@@ -59,6 +59,11 @@ export default {
 
 .anchor3 {
   text-indent: 20px;
+}
+.cate{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: 10px;
+  border-radius: 10px;
 }
 
 .cate-title {

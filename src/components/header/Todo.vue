@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-icon type="carry-out" style="color: #1890ff" @click="getRecentRead" />
+    <a-icon type="carry-out" style="color: black" @click="getRecentRead" />
     <a-drawer
         title="Todo"
         placement="right"

@@ -79,7 +79,7 @@ export default {
 }
 
 .article-body-wrapper {
-  border: #e5e4e4 solid 1px;
+  /*border: #e5e4e4 solid 1px;*/
   border-radius: 10px;
   padding: 10px;
 }

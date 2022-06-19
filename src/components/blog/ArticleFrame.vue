@@ -116,9 +116,8 @@ export default {
 <style>
 .article-frame-wrapper {
   background-color: #ffff;
-  border: 1px solid #e0d8d8;
-  padding-left: 50px;
-  padding-top: 10px;
+  /*border: 1px solid #e0d8d8;*/
+  padding: 40px;
   min-height: 70vh;
 }
 

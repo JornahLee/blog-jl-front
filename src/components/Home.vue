@@ -13,6 +13,7 @@
       <transition name="slide" mode="out-in">
         <router-view name="editLeftSide"></router-view>
         <router-view name="articleNav"></router-view>
+        <router-view name="userInfo"></router-view>
       </transition>
     </template>
 
@@ -33,7 +34,7 @@
 
     </template>
 
-    <template v-slot:right-bar>
+    <template v-slot:right-bar >
       <!--        <transition name="slide">-->
       <router-view name="category"></router-view>
       <router-view name="blank"></router-view>

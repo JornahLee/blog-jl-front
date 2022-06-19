@@ -17,7 +17,8 @@ const routes = [
     {
         path: '/index', components: {
             index: () => import('../Index.vue'),
-            blank: () => import('../Blank')
+            blank: () => import('../Blank'),
+            userInfo:()=> import('../UserInfo.vue')
         }
     },
     {

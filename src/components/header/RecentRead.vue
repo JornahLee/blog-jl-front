@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-icon type="history" style="color: #1890ff" @click="getRecentRead"/>
+    <a-icon type="history" style="color: black" @click="getRecentRead"/>
     <a-drawer
         title="最近阅读"
         placement="right"

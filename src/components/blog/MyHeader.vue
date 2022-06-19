@@ -11,12 +11,13 @@
     </div>
     <div class="xxx-bar">
       <div class="to-login" v-if="!isLogin">
-        <router-link to="/login">登录</router-link>
+        <router-link to="/login" > <a-icon type="user" style="color: black" /></router-link>
       </div>
       <div class="manage-drop" v-else>
         <a-dropdown>
           <a class="ant-dropdown-link">
-            {{ username }}
+<!--            {{ username }}-->
+            <a-icon type="user" style="color: black" />
           </a>
           <a-menu slot="overlay">
             <a-menu-item>
@@ -34,7 +35,7 @@
       <div class="other-drop">
         <a-dropdown>
           <a class="ant-dropdown-link">
-            <a-icon type="menu"/>
+            <a-icon type="menu" style="color: black"/>
           </a>
           <a-menu slot="overlay">
             <a-menu-item>
@@ -52,7 +53,7 @@
       <recent-read class="show-recent"></recent-read>
       <div class="to-articleList">
         <router-link to="/articleList/all">
-          <a-icon type="home"/>
+          <a-icon type="home" style="color: black"/>
         </router-link>
       </div>
 
@@ -73,8 +74,7 @@ export default {
     Todo
   },
   data() {
-    return {
-    }
+    return {}
   },
   props: ['isLogin', 'username'],
   methods: {
@@ -96,6 +96,7 @@ export default {
   color: white;
   background-color: rgb(43, 43, 43);
   float: left;
+  border-radius: 2px;
 }
 
 
@@ -117,6 +118,9 @@ export default {
   margin-top: 20px;
 }
 
+.xxx-bar, .to-login, .ant-dropdown-link {
+  color: black;
+}
 
 
 </style>
