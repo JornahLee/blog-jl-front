@@ -1,7 +1,12 @@
 <template>
   <div class="info-wrapper">
-    <div class="avatar"><a-icon type="user" style="font-size: 100px"/></div>
-    <p>这里是头像</p>
+    <a-avatar class="my-avatar" :size="100" shape="circle" src="http://qiniuyun.ilearn.space/peitela.gif" />
+    <br/>
+    <p>Jornah Lee</p>
+    <p>积跬步，至千里</p>
+    <p>积小流，成江海</p>
+    <p>这里是项目介绍，前后端技术栈介绍，仓库地址</p>
+    <p>以及个人简要介绍</p>
 
   </div>
 </template>
@@ -24,9 +29,10 @@ export default {
   /*border: dotted black 1px;*/
   width: 70%;
   height: 79vh;
-}
-.avatar{
   text-align: center;
+}
+.my-avatar{
+  alignment: center;
 }
 
 </style>

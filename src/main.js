@@ -86,6 +86,10 @@ import Tag from 'ant-design-vue/lib/tag'
 import 'ant-design-vue/lib/tag/style/css'
 Vue.use(Tag);
 
+import Avatar from 'ant-design-vue/lib/avatar'
+import 'ant-design-vue/lib/avatar/style/css'
+Vue.use(Avatar);
+
 import message from 'ant-design-vue/lib/message'
 import 'ant-design-vue/lib/message/style/css'
 
@@ -101,6 +105,10 @@ Vue.config.productionTip = false
 import myAxios from './components/config/myAxios'
 
 Vue.prototype.$axios = myAxios
+
+import api from'./components/config/api'
+Vue.prototype.$api = api
+
 
 import store from './components/store'
 
