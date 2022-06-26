@@ -80,15 +80,22 @@ Vue.use(Anchor);
 
 import Drawer from 'ant-design-vue/lib/drawer'
 import 'ant-design-vue/lib/drawer/style/css'
+
 Vue.use(Drawer);
 
 import Tag from 'ant-design-vue/lib/tag'
 import 'ant-design-vue/lib/tag/style/css'
+
 Vue.use(Tag);
 
 import Avatar from 'ant-design-vue/lib/avatar'
 import 'ant-design-vue/lib/avatar/style/css'
+
 Vue.use(Avatar);
+
+import Carousel from 'ant-design-vue/lib/carousel'
+import 'ant-design-vue/lib/carousel/style/css'
+Vue.use(Carousel);
 
 import message from 'ant-design-vue/lib/message'
 import 'ant-design-vue/lib/message/style/css'
@@ -106,7 +113,8 @@ import myAxios from './components/config/myAxios'
 
 Vue.prototype.$axios = myAxios
 
-import api from'./components/config/api'
+import api from './components/config/api'
+
 Vue.prototype.$api = api
 
 

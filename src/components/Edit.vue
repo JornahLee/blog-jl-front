@@ -114,7 +114,7 @@ export default {
           enable: false,
         },
         after: () => {
-          this.contentEditor.setValue('hello, Vditor + Vue!');
+          this.getArticle(this.articleId)
         },
         toolbar: [
           "headings",

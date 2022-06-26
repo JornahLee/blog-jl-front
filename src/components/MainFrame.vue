@@ -33,7 +33,7 @@
 
     <div class="footer">
       <div>
-        <div>© 2019 - 2020 Jornah Lee | 蜀ICP备20012827号-1</div>
+        <div>© 2019 - 2022 Jornah Lee | 蜀ICP备20012827号-1</div>
       </div>
       <a-back-top/>
       <vue-live2d class="ban-niang" :direction="'left'"></vue-live2d>

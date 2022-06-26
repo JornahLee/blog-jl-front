@@ -1,24 +1,35 @@
 <template>
   <div class="info-wrapper">
-    <a-avatar class="my-avatar" :size="100" shape="circle" src="http://qiniuyun.ilearn.space/peitela.gif" />
+    <a-avatar class="my-avatar" :size="100" shape="circle" :src="userInfo.avatarUrl"/>
     <br/>
-    <p>Jornah Lee</p>
-    <p>积跬步，至千里</p>
-    <p>积小流，成江海</p>
-    <p>这里是项目介绍，前后端技术栈介绍，仓库地址</p>
-    <p>以及个人简要介绍</p>
+    <div>{{ userInfo.screenName }}</div>
+    <div>{{ userInfo.signature }}</div>
+    <div>{{ userInfo.projIntroduction }}</div>
+    <div>{{ userInfo.introduction }}</div>
 
   </div>
 </template>
 
 <script>
 export default {
-  name: "UserInfo"
+  name: "UserInfo",
+  data() {
+    return {
+      userInfo: {}
+    }
+  },
+  mounted() {
+    this.$api.getOwnerInfo()
+        .then(response => {
+          const {data} = response.data
+          this.userInfo = data;
+        })
+  }
 }
 </script>
 
 <style scoped>
-.info-wrapper{
+.info-wrapper {
   /*margin-top: 100px;*/
   float: right;
   padding: 40px 10px 10px;
@@ -30,8 +41,10 @@ export default {
   width: 70%;
   height: 79vh;
   text-align: center;
+  white-space: pre-wrap;
 }
-.my-avatar{
+
+.my-avatar {
   alignment: center;
 }
 
