@@ -1,8 +1,9 @@
 <template>
   <div class="index-wrapper">
     <div class="stats-info">
-      <scrolling-text :data-list="statsInfoStrList"></scrolling-text>
+<!--      <scrolling-text :data-list="statsInfoStrList"></scrolling-text>-->
 <!--      <circle-scrolling :data-list="statsInfoStrList"></circle-scrolling>-->
+      <scrolling :data-list="statsInfoStrList"></scrolling>
     </div>
     <br/>
     <a-spin tip="Loading..." v-if="loading"></a-spin>
@@ -34,9 +35,11 @@
 import VueMarkdown from 'vue-markdown'
 import ScrollingText from "./common/ScrollingText";
 import CircleScrolling from "./common/CircleScrolling";
+import Scrolling from "./common/Scrolling";
 
 export default {
   components: {
+    Scrolling,
     CircleScrolling,
     ScrollingText,
     VueMarkdown
@@ -86,7 +89,7 @@ export default {
   font-size: 20px;
   color: black;
   font-weight: bold;
-  /*text-align: left;*/
+  text-align: center;
 }
 
 .article {
@@ -102,8 +105,8 @@ export default {
 
 .stats-info {
   /*高度必须和字体高度一直， 不然div移除再新增，会导致屏幕闪烁*/
-  height: 20px;
-  font-size: 20px;
+  /*height: 20px;*/
+  font-size: 15px;
   text-align: right;
 }
 
