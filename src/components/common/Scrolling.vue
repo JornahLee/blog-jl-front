@@ -27,7 +27,7 @@ export default {
         this.dataList.shift()
         // 运行到内部延时器时，让该类名不能使用
         this.istop = false
-      }, 5000)
+      }, 3000)
     }
   },
   created() {
