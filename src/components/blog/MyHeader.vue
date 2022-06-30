@@ -11,7 +11,7 @@
     </div>
     <div class="xxx-bar">
       <div class="to-login" v-if="!isLogin">
-        <router-link to="/login" > <a-icon type="user" style="color: black" /></router-link>
+        <router-link to="/login" > <a-icon type="user" style="color: black;" /></router-link>
       </div>
       <div class="manage-drop" v-else>
         <a-dropdown>
@@ -53,7 +53,7 @@
       <recent-read class="show-recent"></recent-read>
       <div class="to-articleList">
         <router-link to="/articleList/all">
-          <a-icon type="home" style="color: black"/>
+          <a-icon type="home" style="color: black;"/>
         </router-link>
       </div>
 
@@ -86,7 +86,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 
 .home {
@@ -110,12 +110,16 @@ export default {
 
 .xxx-bar {
   margin-right: 20px;
+  margin-top: -8px;
+  font-size: 20px;
+  float: right;
 }
 
 .to-articleList, .manage-drop, .other-drop, .to-login, .to-todoList, .show-recent {
   float: right;
-  margin-left: 10px;
+  margin-left: 15px;
   margin-top: 20px;
+
 }
 
 .xxx-bar, .to-login, .ant-dropdown-link {

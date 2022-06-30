@@ -3,7 +3,7 @@
     <div class="box-right">
       <ul :class="{top:istop}">
         <li v-for="data in dataList">
-          <span> {{ data }}</span>
+          <a-tag> {{ data }}</a-tag>
         </li>
       </ul>
     </div>

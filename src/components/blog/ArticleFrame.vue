@@ -2,12 +2,12 @@
   <div class="article-frame-wrapper" :key="articleId">
     <div class="article-title">{{ article.title }}</div>
     <div class="meta-info">
-      <span>分类: x </span>|
-      <span>标签: x </span>|
-      <span>创建: {{ article.created|dateFormat }} </span>|
-      <span>更新: {{ article.updated|dateFormat }}</span>|
-      <span>状态: {{ article.status }}</span>|
-      <router-link :to="article.id|joinStrBefore('/edit/')" v-if="sharedState.isLogin">编辑</router-link>
+      <a-tag>创建<a-icon type="calendar"/>:{{ article.created|dateFormat }} </a-tag>
+      <a-tag>更新<a-icon type="calendar"/>: {{ article.updated|dateFormat }}</a-tag>
+      <a-tag>状态:  {{ article.status }}</a-tag>
+      <router-link :to="article.id|joinStrBefore('/edit/')" v-if="sharedState.isLogin">
+        <a-tag color="green">编辑</a-tag>
+      </router-link>
     </div>
     <hr/>
     <div class="article-content">
@@ -81,8 +81,7 @@ export default {
       this.getArticleMetaInfo();
     },
     getArticleData() {
-      let url = '/blog/article/' + this.articleId
-      this.$axios.get(url)
+      this.$api.getArticleById(this.articleId)
           .then(response => {
             this.article = response.data.data
             this.sendMsg();
@@ -93,8 +92,7 @@ export default {
           })
     },
     getArticleMetaInfo() {
-      let url = `/blog/article//meta/${this.articleId}`
-      this.$axios.get(url)
+      this.$api.getArticleMetaInfo(this.articleId)
           .then(response => {
             console.log(response);
             const {category, tags} = response.data.data

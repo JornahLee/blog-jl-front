@@ -5,6 +5,9 @@
     </a-spin>
     <div class="articleList">
       <div v-for="li in articleList" :key="li.id" class="articleName">
+        <router-link :to="li.id|joinStrBefore('/edit/')" v-if="sharedState.isLogin">
+          <a-tag color="green">编辑</a-tag>
+        </router-link>
         <router-link :to="'/detail/'+li.id">{{ li.title }}</router-link>
       </div>
     </div>
@@ -23,6 +26,7 @@ export default {
       pageNum: 1,
       loading: false,
       total: 0,
+      sharedState: this.$store.state
     }
   },
   props: ['type', 'value'],
@@ -30,7 +34,7 @@ export default {
     this.getData();
   },
   methods: {
-    getData(){
+    getData() {
       this.getByPage(1, this.pageSize);
     },
     getByPage(pageNum, pageSize) {
@@ -83,7 +87,8 @@ export default {
   border-radius: 10px;
   padding: 10px;
 }
-.articleName{
+
+.articleName {
   border-bottom: 1px solid black;
   margin-bottom: 10px;
 }

@@ -52,7 +52,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 body{
   background-color: #eff0f5;
 }
@@ -94,7 +94,7 @@ body{
   width: 20%;
   min-height: 100px;
   /*background-color: #FF0000;*/
-  margin-right: 5px;
+  /*margin-right: 5px;*/
 }
 @media screen and (max-width: 400px) {
   .left {

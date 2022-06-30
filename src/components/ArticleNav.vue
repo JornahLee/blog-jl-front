@@ -1,15 +1,19 @@
 <template>
   <div class="nav-wrapper">
     <div class="cate-container">
-      <a-checkable-tag class="my-tag" v-model="cate.checked"
-                       @change="e=>changeSelectStatus(e, cate,'byCate')"
-                       v-if="index <= showLimit || showAllCate"
-                       v-for="(cate,index) in categories"
-                       :key="cate.id"> {{ cate.name }}
-      </a-checkable-tag>
       <div>
-        <a-tag v-if="showAllCate" @click="showAllCate=false">收起</a-tag>
-        <a-tag v-else @click="showAllCate=true">more</a-tag>
+        <a-checkable-tag closable class="my-tag" v-model="cate.checked"
+                         @change="e=>changeSelectStatus(e, cate,'byCate')"
+                         v-if="index <= showLimit || showAllCate"
+                         v-for="(cate,index) in categories"
+                         :key="cate.id"> {{ cate.name }}
+        </a-checkable-tag>
+        <div>
+          <a-checkable-tag  @change="e=>this.showAllCate=e" v-model="showAllCate">
+            <span v-if="showAllCate">收起</span>
+            <span v-else>更多...</span>
+          </a-checkable-tag>
+        </div>
       </div>
     </div>
     <hr/>
@@ -36,8 +40,9 @@ export default {
       },
       tags: [],
       categories: [],
-      showLimit: 8,
-      showAllCate: false
+      showLimit: 15,
+      showAllCate: false,
+      managing:false
     }
   },
   mounted() {
@@ -45,19 +50,13 @@ export default {
     this.getAllTag();
   },
   methods: {
-    cancelOthers() {
+    cancelOtherCate() {
       if (!this.selected) {
         return;
       }
       const {type, id} = this.selected
       if (type === 'byCate') {
         this.categories
-            .filter(e => e.id !== id && e.checked === true)
-            .forEach(e => {
-              e.checked = false
-            })
-      } else if ('byTag' === type) {
-        this.tags
             .filter(e => e.id !== id && e.checked === true)
             .forEach(e => {
               e.checked = false
@@ -73,7 +72,7 @@ export default {
         this.selected = null;
       }
       this.changeList();
-      this.cancelOthers()
+      this.cancelOtherCate()
 
     },
     changeList: function () {
@@ -96,15 +95,16 @@ export default {
       this.$axios.get(url).then(resp => {
         this.categories = resp.data.data
       })
-    }
+    },
   },
 }
 </script>
 
-<style>
+<style scoped>
 .nav-wrapper {
   float: right;
   padding: 25px 10px 10px;
+  text-align: right;
 }
 
 .cate-container,.tag-container{

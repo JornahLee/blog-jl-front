@@ -7,6 +7,7 @@
 // import Vue from 'vue';
 import App from './App';
 // import axios from 'axios'
+import timeUtil from './utils/timeUtil'
 
 import 'ant-design-vue/lib/input/style/css'
 import 'ant-design-vue/lib/modal/style/css'
@@ -95,6 +96,7 @@ Vue.use(Avatar);
 
 import Carousel from 'ant-design-vue/lib/carousel'
 import 'ant-design-vue/lib/carousel/style/css'
+
 Vue.use(Carousel);
 
 import message from 'ant-design-vue/lib/message'
@@ -129,25 +131,12 @@ Vue.prototype.$bus = bus
 Vue.config.productionTip = false;
 
 // copy的别人的做法
+Vue.filter('dateTimeFormat', function (dt) {
+    return timeUtil.dateTimeFormat(dt, 'YYYY-mm-dd HH:MM:SS')
+})
+
 Vue.filter('dateFormat', function (dt) {
-    let date = new Date(dt)
-    let ret;
-    let fmt = 'YYYY-mm-dd HH:MM:SS'
-    const opt = {
-        "Y+": date.getFullYear().toString(),        // 年
-        "m+": (date.getMonth() + 1).toString(),     // 月
-        "d+": date.getDate().toString(),            // 日
-        "H+": date.getHours().toString(),           // 时
-        "M+": date.getMinutes().toString(),         // 分
-        "S+": date.getSeconds().toString()          // 秒
-    };
-    for (let k in opt) {
-        ret = new RegExp("(" + k + ")").exec(fmt);
-        if (ret) {
-            fmt = fmt.replace(ret[1], (ret[1].length == 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, "0")))
-        }
-    }
-    return fmt;
+    return timeUtil.dateFormat(dt)
 })
 
 Vue.filter('joinStrBefore', function (source, param) {

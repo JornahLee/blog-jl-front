@@ -5,12 +5,19 @@
     </div>
     <div class="info">
       <div class="display-info">
-        <span class="display-info-item">创建: {{ article.created|defaultValue(new Date())|dateFormat }} </span>
-        <span class="display-info-item">更新: {{ article.updated|defaultValue(new Date())|dateFormat }}</span>
-        <router-link :to="'/detail/'+article.id" v-if="article.id">详情页</router-link>
-        <a @click="saveTitleAndContent"> <span class="saveContent">保存</span></a>
-        <a @click="deleteArticle" v-if="article.id"> <span class="saveContent">删除</span></a>
-
+        <a-tag class="display-info-item">创建
+          <a-icon type="calendar"/>
+          : {{ article.created|defaultValue(new Date())|dateTimeFormat }}
+        </a-tag>
+        <a-tag class="display-info-item">更新
+          <a-icon type="calendar"/>
+          : {{ article.updated|defaultValue(new Date())|dateTimeFormat }}
+        </a-tag>
+        <router-link :to="'/detail/'+article.id" v-if="article.id">
+          <a-tag color="green">详情页</a-tag>
+        </router-link>
+        <a-tag @click="saveTitleAndContent" color="green"><span>保存</span></a-tag>
+        <a-tag @click="deleteArticle" v-if="article.id" color="green"><span>删除</span></a-tag>
       </div>
     </div>
     <div id="vditor"></div>
@@ -96,18 +103,16 @@ export default {
         toolbarConfig: {
           pin: true,
         },
-        outline:{
-          enable:true
+        outline: {
+          enable: true
         },
-        upload:{
+        upload: {
           accept: 'image/*,.mp3, .wav, .rar',
           token: 'test',
           url: 'http://api.ilearn.space:8089/admin/attach/upload',
           linkToImgUrl: '/api/upload/fetch',
-          filename (name) {
-            return name.replace(/[^(a-zA-Z0-9\u4e00-\u9fa5\.)]/g, '').
-            replace(/[\?\\/:|<>\*\[\]\(\)\$%\{\}@~]/g, '').
-            replace('/\\s/g', '')
+          filename(name) {
+            return name.replace(/[^(a-zA-Z0-9\u4e00-\u9fa5\.)]/g, '').replace(/[\?\\/:|<>\*\[\]\(\)\$%\{\}@~]/g, '').replace('/\\s/g', '')
           },
         },
         cache: {
@@ -212,8 +217,8 @@ export default {
         this.$message.success("删除成功")
       })
     },
-    getHeight(percent){
-      const ret = document.documentElement.clientHeight * (percent/100)
+    getHeight(percent) {
+      const ret = document.documentElement.clientHeight * (percent / 100)
       console.log(ret)
       return ret
     }
@@ -237,8 +242,7 @@ export default {
 
 .info {
   height: 32px;
-  /*background-color: #52c41a;*/
-  /*border-bottom: solid black 1px;*/
+  margin-bottom: 5px;
 }
 
 .display-info {
@@ -250,11 +254,6 @@ export default {
   margin-right: 5px;
 }
 
-.saveContent {
-  border-radius: 5px;
-  background-color: #edf8e8;
-  padding: 1px;
-}
 
 .form-element {
   float: right;

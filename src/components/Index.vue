@@ -1,8 +1,13 @@
 <template>
   <div class="index-wrapper">
+    <div>
+      <a-tag color="orange">
+        <router-link :to="'/articleList/all'">所有文章</router-link>
+      </a-tag>
+    </div>
     <div class="stats-info">
-<!--      <scrolling-text :data-list="statsInfoStrList"></scrolling-text>-->
-<!--      <circle-scrolling :data-list="statsInfoStrList"></circle-scrolling>-->
+      <!--      <scrolling-text :data-list="statsInfoStrList"></scrolling-text>-->
+      <!--      <circle-scrolling :data-list="statsInfoStrList"></circle-scrolling>-->
       <scrolling :data-list="statsInfoStrList"></scrolling>
     </div>
     <br/>
@@ -13,9 +18,9 @@
           <div class="title">{{ article.title }}</div>
         </router-link>
         <div class="meta">
-          <span>创建 <a-icon type="calendar"/>: {{ article.created |dateFormat }} | </span>
-          <span>更新 <a-icon type="calendar"/>: {{ article.updated |dateFormat }} | </span>
-          <span>浏览: {{ article.hits }}</span>
+          <span> <a-tag>创建 <a-icon type="calendar"/> {{ article.created |dateFormat }}</a-tag>  </span>
+          <span> <a-tag>更新 <a-icon type="calendar"/> {{ article.updated |dateFormat }}</a-tag>  </span>
+          <span> <a-tag> {{ article.hits }} <a-icon type="eye"/></a-tag></span>
         </div>
       </div>
       <div class="article-summary">
@@ -64,8 +69,7 @@ export default {
           this.loading = false
         })
   },
-  methods: {
-  }
+  methods: {}
 }
 </script>
 
