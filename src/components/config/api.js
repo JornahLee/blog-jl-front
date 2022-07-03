@@ -47,15 +47,30 @@ export default {
         let url = `/blog/meta/tag?name=${tagName}`
         return myAxios.put(url);
     },
-    delCate(id){
+    delCate(id) {
         let url = `/blog/meta/cate/${id}`
         return myAxios.delete(url)
     },
-    delTag(id){
+    delTag(id) {
         let url = `/blog/meta/tag/${id}`
         return myAxios.delete(url)
+    },
+    getNextOrLastArticle(id, isNext) {
+        let url = '/blog/article/nextOrLast'
+        let params = {articleId: id, next: isNext, byType: ''}
+        return myAxios.get(url, {params})
+    },
+    deleteArticle(id) {
+        const url = `/blog/article/${id}`
+        return myAxios.delete(url);
+    },
+    saveOrUpdateArticle(article) {
+        let url = '/blog/article/saveOrUpdate'
+        return myAxios.post(url, article)
+    },
+    yiyan() {
+        return myAxios.get('https://v1.hitokoto.cn')
     }
-
 
 
 };

@@ -1,7 +1,7 @@
 <template>
   <div class="frame-wrapper">
     <a-affix :offset-top="0">
-      <div class="header">
+      <div class="header" :class="{'headerDisplay':headerDisplay,'headerHide':!headerDisplay}">
         <slot name="header">
           <h1>this is header</h1>
         </slot>
@@ -36,7 +36,7 @@
         <div>© 2019 - 2022 Jornah Lee | 蜀ICP备20012827号-1</div>
       </div>
       <a-back-top/>
-      <vue-live2d class="ban-niang" :direction="'left'"></vue-live2d>
+<!--      <vue-live2d class="ban-niang" :direction="'left'"></vue-live2d>-->
     </div>
   </div>
 </template>
@@ -48,13 +48,46 @@ export default {
   name: 'MainFrame',
   components: {
     vueLive2d
+  },
+  data() {
+    return {
+      headerDisplay: true,
+      lastScrollTop: null
+    }
+  },
+  mounted() {
+    //todo 可能会导致，切换页面时导致的抖动
+    // window.addEventListener('scroll', this.handleScroll, true); //监听滚动条
+  },
+  methods: {
+    handleScroll() {
+      // 滚动条距文档顶部的距离
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop ||
+          document.body.scrollTop
+      // 滚动条滚动的距离
+      let scrollStep = scrollTop - this.lastScrollTop;
+      // 更新——滚动前，滚动条距文档顶部的距离
+      this.lastScrollTop = scrollTop;
+      if (scrollStep < 0) {
+        console.log("滚动条向上滚动了！")
+        this.headerDisplay = true
+      } else {
+        console.log("滚动条向下滚动了！")
+        this.headerDisplay = false
+      }
+    }
   }
 }
 </script>
 
 <style scoped>
-body{
-  background-color: #eff0f5;
+
+.headerDisplay {
+  display: block;
+}
+
+.headerHide {
+  display: none;
 }
 
 .ban-niang {
@@ -65,7 +98,11 @@ body{
 }
 
 .frame-wrapper {
-  background-color: rgb(241, 242, 245);
+  /*background-color: rgb(241, 242, 245);*/
+  /*background-image: radial-gradient(black, white);*/
+  background-image: radial-gradient(circle, whitesmoke, #efe6d6, whitesmoke);
+  /*background-image: linear-gradient(45deg, #9b9b9e,white, #9b9b9e);*/
+
 }
 
 .header {
@@ -96,6 +133,7 @@ body{
   /*background-color: #FF0000;*/
   /*margin-right: 5px;*/
 }
+
 @media screen and (max-width: 400px) {
   .left {
     display: none;
@@ -112,6 +150,7 @@ body{
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   margin-bottom: 40px;
 }
+
 @media screen and (max-width: 400px) {
   .center {
     width: 100%;
@@ -132,11 +171,13 @@ body{
   right: 10px;
   background-color: white;
 }
+
 @media screen and (max-width: 400px) {
   .right-bar {
     display: none;
   }
-  .ban-niang{
+
+  .ban-niang {
     display: none;
   }
 }
@@ -154,4 +195,10 @@ body{
 }
 
 
+</style>
+
+<style>
+hr {
+  width: 100%;
+}
 </style>

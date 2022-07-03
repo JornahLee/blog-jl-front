@@ -2,12 +2,7 @@
   <div class="article-frame-wrapper" :key="articleId">
     <div class="article-title">{{ article.title }}</div>
     <div class="meta-info">
-      <a-tag>创建<a-icon type="calendar"/>:{{ article.created|dateFormat }} </a-tag>
-      <a-tag>更新<a-icon type="calendar"/>: {{ article.updated|dateFormat }}</a-tag>
-      <a-tag>状态:  {{ article.status }}</a-tag>
-      <router-link :to="article.id|joinStrBefore('/edit/')" v-if="sharedState.isLogin">
-        <a-tag color="green">编辑</a-tag>
-      </router-link>
+      <article-descrip :article="article" :is-in-detail="true"></article-descrip>
     </div>
     <hr/>
     <div class="article-content">
@@ -34,11 +29,13 @@
 
 <script>
 import VueMarkdown from 'vue-markdown'
-import Prism from "prismjs"; //引入插件
+import Prism from "prismjs";
+import ArticleDescrip from "./ArticleDescrip"; //引入插件
 
 export default {
   name: 'ArticleFrame',
   components: {
+    ArticleDescrip,
     VueMarkdown
   },
   props: ['articleId', 'headLineStr']

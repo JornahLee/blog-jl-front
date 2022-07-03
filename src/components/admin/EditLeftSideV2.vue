@@ -2,6 +2,7 @@
   <div class="edit-left-side">
     <a-checkable-tag @change="e=>this.managing=e" v-model="managing" v-if="this.$store.state.isLogin">管理
     </a-checkable-tag>
+    <hr/>
     <div class="cate-container">
       <div v-if="managing">
         <a-tag closable class="my-tag"
@@ -153,7 +154,6 @@ export default {
       this.$api.getArticleMetaInfo(this.article.id)
           .then(response => {
             const {category, tags} = response.data.data
-            console.log(response.data.data);
             this.article.cate = category
             this.article.tags = tags
             if (category) {
@@ -165,11 +165,8 @@ export default {
             }
             if (tags) {
               let articleTagIdList = tags.map(tag => tag.id)
-              console.log(tags);
               this.tags.filter(tag => {
-                console.log(tag.id, tag.name);
-                let match = articleTagIdList.indexOf(tag.id) !== -1
-                return match
+                return articleTagIdList.indexOf(tag.id) !== -1
               }).forEach(tag => {
                 tag.checked = true
               })
@@ -257,54 +254,25 @@ export default {
   },
   created() {
     this.$bus.$on('articleEditMetaInit', article => {
-      console.log('articleEditMetaInit');
-      console.log(article);
-      console.log('articleEditMetaInit');
+      console.log('bus on ono no non on o')
       this.article = {id: article.id}
+      this.getAllTag()
+      this.getAllCategory()
       this.getArticleMetaInfo()
     })
   }
 };
 </script>
-<style>
+<style scoped>
 .edit-left-side {
+  text-align: right;
   margin-top: 56px;
   margin-left: 30%;
   /*background-color: yellow;*/
   /*width: 100%;*/
   /*height: 100%;*/
+  padding: 5px;
 }
 
-
-.item {
-  margin: 10px;
-  /*background-color: #cb0909;*/
-  /*width: 100%;*/
-  /*height: 100px;*/
-  /*padding: 20px;*/
-  height: 50px;
-}
-
-.label {
-  padding-top: 15px;
-  float: left;
-  width: 30%;
-  text-align: right;
-  /*margin-right: 10px;*/
-}
-
-.input-box {
-  padding-top: 10px;
-  float: right;
-  width: 60%;
-}
-
-.new-cate:focus {
-  width: 100%;
-  transition: width 0.5s;
-}
-
-.new-cate {
-  width: 25px;
-}
 </style>
+

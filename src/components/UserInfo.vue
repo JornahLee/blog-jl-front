@@ -1,12 +1,37 @@
 <template>
   <div class="info-wrapper">
     <a-avatar class="my-avatar" :size="100" shape="circle" :src="userInfo.avatarUrl"/>
-    <br/>
-    <div>{{ userInfo.screenName }}</div>
-    <div>{{ userInfo.signature }}</div>
-    <div>{{ userInfo.projIntroduction }}</div>
-    <div>{{ userInfo.introduction }}</div>
-
+    <!--    <br/>-->
+    <div class="screen-name info-dtl">{{ userInfo.screenName }}</div>
+    <div class="signature .info-dtl">{{ userInfo.signature }}</div>
+    <div class="stats">
+      <div class="stats-item">
+        <div>随笔</div>
+        <div class="stats-count">
+          <router-link :to="'/articleList/all'">{{ userInfo.articleCount ? userInfo.articleCount : 150 }}</router-link>
+        </div>
+      </div>
+      <div class="stats-item">
+        <div>分类</div>
+        <div class="stats-count">
+          <router-link :to="'/articleList/all'">{{ userInfo.cateCount ? userInfo.cateCount : 10 }}</router-link>
+        </div>
+      </div>
+      <div class="stats-item">
+        <div>标签</div>
+        <div class="stats-count">
+          <router-link :to="'/articleList/all'">{{ userInfo.tagCount ? userInfo.tagCount : 20 }}</router-link>
+        </div>
+      </div>
+    </div>
+    <div class="discrption">
+      介绍: {{userInfo.projIntroduction }}
+    </div>
+    <hr/>
+    <div class="yiyan">
+      <a :href="yiyan.href" class="yiyan-text"> {{ yiyan.text }}</a>
+      <div class="discrption"><span>来源: 《{{ yiyan.from }}》 作者: {{ yiyan.fromWho }}</span></div>
+    </div>
   </div>
 </template>
 
@@ -15,7 +40,13 @@ export default {
   name: "UserInfo",
   data() {
     return {
-      userInfo: {}
+      userInfo: {},
+      yiyan: {
+        text: '',
+        href: '',
+        from: '',
+        fromWHo: ''
+      }
     }
   },
   mounted() {
@@ -24,24 +55,66 @@ export default {
           const {data} = response.data
           this.userInfo = data;
         })
+    this.$api.yiyan()
+        .then(({data}) => {
+          this.yiyan.text = data.hitokoto
+          this.yiyan.from = data.from
+          this.yiyan.fromWho = data.from_who ? data.from_who : '佚名'
+          this.yiyan.href = 'https://hitokoto.cn/?uuid=' + data.uuid
+        })
   }
 }
 </script>
 
 <style scoped>
 .info-wrapper {
-  /*margin-top: 100px;*/
   float: right;
-  padding: 40px 10px 10px;
-  /*background-color: white;*/
-
-  /*box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 10px 0 rgba(0, 0, 0, 0.19);*/
-  /*border-radius: 10px;*/
-  /*border: dotted black 1px;*/
+  padding: 35px 10px 20px;
   width: 70%;
-  height: 79vh;
+  /*height: 60vh;*/
   text-align: center;
-  white-space: pre-wrap;
+  border-radius: 10px;
+  background-color: white;
+  margin-right: 15px;
+}
+
+.screen-name {
+  font-size: 20px;
+}
+
+.stats {
+  /*float: right;*/
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  /*text-align: center;*/
+  justify-content: center;
+}
+
+.stats-item {
+  margin: 5px 10px 5px 5px;
+}
+
+.stats-count {
+  font-size: 18px;
+}
+
+.info-dtl {
+  margin-top: 10px;
+}
+
+.yiyan {
+  margin-top: 15px;
+}
+
+.yiyan-text {
+  color: rgba(0, 0, 0, 0.65);
+  text-decoration: underline
+}
+
+.discrption {
+  margin-top: 5px;
+  font-size: 1px;
 }
 
 .my-avatar {

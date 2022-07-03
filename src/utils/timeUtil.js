@@ -21,7 +21,7 @@ export default {
             return `${hours}小时`
         }
         if (minitues > 0) {
-            return `${minitues}分钟`
+            return `${minitues}分`
         }
         return `${seconds}秒`
     },
@@ -46,7 +46,6 @@ export default {
     },
     dateFormat(dt) {
         let date = new Date(dt)
-        console.log(date);
         const month = (date.getMonth() + 1).toString().padStart(2, '0');
         const strDate = date.getDate().toString().padStart(2, '0');
         // const starHours = date.getHours().toString().padStart(2, '0');

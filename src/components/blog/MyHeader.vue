@@ -2,8 +2,7 @@
   <div>
     <router-link to="/index">
       <div class="home">
-        <div>Jornah Lee</div>
-        <div>Love Life!</div>
+        <div class="blog-name">Jornah's Blog</div>
       </div>
     </router-link>
     <div class="search-bar">
@@ -53,9 +52,15 @@
       <recent-read class="show-recent"></recent-read>
       <div class="to-articleList">
         <router-link to="/articleList/all">
+          <a-icon type="unordered-list" style="color: black;"/>
+        </router-link>
+      </div>
+      <div class="to-articleList">
+        <router-link to="/index">
           <a-icon type="home" style="color: black;"/>
         </router-link>
       </div>
+
 
     </div>
   </div>
@@ -80,14 +85,17 @@ export default {
   methods: {
     logout() {
       this.$store.resetState()
-      this.$message.success({content: "注销成功"})
+      this.$router.go(0)
     }
   }
 }
 </script>
 
 <style scoped>
-
+.blog-name{
+  margin-top: 8px;
+  font-size: 20px;
+}
 
 .home {
   width: 20%;

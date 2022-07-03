@@ -1,11 +1,11 @@
 <template>
   <div class="index-wrapper">
-    <div>
-      <a-tag color="orange">
+    <div class="inner-header1">
+      <a-tag color="green">
         <router-link :to="'/articleList/all'">所有文章</router-link>
       </a-tag>
     </div>
-    <div class="stats-info">
+    <div class="stats-info inner-header2">
       <!--      <scrolling-text :data-list="statsInfoStrList"></scrolling-text>-->
       <!--      <circle-scrolling :data-list="statsInfoStrList"></circle-scrolling>-->
       <scrolling :data-list="statsInfoStrList"></scrolling>
@@ -18,16 +18,14 @@
           <div class="title">{{ article.title }}</div>
         </router-link>
         <div class="meta">
-          <span> <a-tag>创建 <a-icon type="calendar"/> {{ article.created |dateFormat }}</a-tag>  </span>
-          <span> <a-tag>更新 <a-icon type="calendar"/> {{ article.updated |dateFormat }}</a-tag>  </span>
-          <span> <a-tag> {{ article.hits }} <a-icon type="eye"/></a-tag></span>
+          <article-descrip :article="article" :is-index="true"></article-descrip>
         </div>
       </div>
       <div class="article-summary">
         <vue-markdown class="markdown" :source="article.content"
         ></vue-markdown>
       </div>
-      <hr/>
+     <a-divider/>
     </div>
     <router-link :to="'/articleList/all'">
       <div class="more">
@@ -41,9 +39,11 @@ import VueMarkdown from 'vue-markdown'
 import ScrollingText from "./common/ScrollingText";
 import CircleScrolling from "./common/CircleScrolling";
 import Scrolling from "./common/Scrolling";
+import ArticleDescrip from "./blog/ArticleDescrip";
 
 export default {
   components: {
+    ArticleDescrip,
     Scrolling,
     CircleScrolling,
     ScrollingText,
@@ -84,10 +84,15 @@ export default {
 <style scoped>
 
 .index-wrapper {
-  padding: 20px;
+  padding: 15px;
   text-align: left;
 }
-
+.inner-header1{
+  float: left;
+}
+.inner-header2{
+  float: right;
+}
 
 .title {
   font-size: 20px;
@@ -98,6 +103,9 @@ export default {
 
 .article {
   margin-top: 20px;
+}
+.article-summary{
+  margin-top: 10px;
 }
 
 .more {

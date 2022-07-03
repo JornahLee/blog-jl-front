@@ -4,21 +4,11 @@
       <a-input size="large" placeholder="这里是标题" v-model="article.title" addonBefore="标题"/>
     </div>
     <div class="info">
-      <div class="display-info">
-        <a-tag class="display-info-item">创建
-          <a-icon type="calendar"/>
-          : {{ article.created|defaultValue(new Date())|dateTimeFormat }}
-        </a-tag>
-        <a-tag class="display-info-item">更新
-          <a-icon type="calendar"/>
-          : {{ article.updated|defaultValue(new Date())|dateTimeFormat }}
-        </a-tag>
-        <router-link :to="'/detail/'+article.id" v-if="article.id">
-          <a-tag color="green">详情页</a-tag>
-        </router-link>
-        <a-tag @click="saveTitleAndContent" color="green"><span>保存</span></a-tag>
-        <a-tag @click="deleteArticle" v-if="article.id" color="green"><span>删除</span></a-tag>
-      </div>
+      <article-descrip :article="article" :is-in-detail="true" :is-editing="true"></article-descrip>
+      <router-link :to="'/detail/'+article.id" v-if="article.id">
+        <a-tag color="green">详情页</a-tag>
+      </router-link>
+      <a-tag @click="saveTitleAndContent" color="green"><span>保存</span></a-tag>
     </div>
     <div id="vditor"></div>
   </div>
@@ -27,9 +17,11 @@
 <script>
 import Vditor from 'vditor';
 import 'vditor/dist/index.css';
+import ArticleDescrip from "./blog/ArticleDescrip";
 
 export default {
   name: "Edit",
+  components: {ArticleDescrip},
   data() {
     return {
       article: {
@@ -53,16 +45,12 @@ export default {
     saveTitleAndContent: function () {
       this.article.content = this.contentEditor.getValue()
       const emptyReg = /^\s*$/i
-      console.log(this.article.title);
-      console.log(emptyReg.test(this.article.title));
-      console.log(this.article.content);
-      console.log(emptyReg.test(this.article.content));
       if (emptyReg.test(this.article.title) || emptyReg.test(this.article.content)) {
         this.$message.warning("请输入标题或者内容")
         return;
       }
 
-      let url = '/blog/article/saveOrUpdate'
+
       const key = 'updatable';
       this.$message.loading({content: '保存中...', key});
       let params = {
@@ -71,7 +59,7 @@ export default {
         content: this.article.content
       }
       this.saving = true;
-      this.$axios.post(url, params).then(resp => {
+      this.$api.saveOrUpdateArticle(params).then(resp => {
         const {id} = resp.data.data
         if (this.article.id === undefined) {
           this.$router.push('/edit/' + id)
@@ -212,8 +200,7 @@ export default {
       });
     },
     deleteArticle() {
-      const url = '/blog/article/' + this.articleId
-      this.$axios.delete(url).then(resp => {
+      this.$api.deleteArticle(this.articleId).then(resp => {
         this.$message.success("删除成功")
       })
     },
@@ -242,16 +229,8 @@ export default {
 
 .info {
   height: 32px;
-  margin-bottom: 5px;
-}
-
-.display-info {
-  float: left;
-  margin-top: 10px;
-}
-
-.display-info-item {
-  margin-right: 5px;
+  margin-top: 5px;
+  margin-bottom: -5px;
 }
 
 

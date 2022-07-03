@@ -94,10 +94,10 @@ import 'ant-design-vue/lib/avatar/style/css'
 
 Vue.use(Avatar);
 
-import Carousel from 'ant-design-vue/lib/carousel'
-import 'ant-design-vue/lib/carousel/style/css'
+import Divider from 'ant-design-vue/lib/divider'
+import 'ant-design-vue/lib/divider/style/css'
 
-Vue.use(Carousel);
+Vue.use(Divider);
 
 import message from 'ant-design-vue/lib/message'
 import 'ant-design-vue/lib/message/style/css'
