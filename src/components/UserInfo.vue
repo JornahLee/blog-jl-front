@@ -8,19 +8,19 @@
       <div class="stats-item">
         <div>随笔</div>
         <div class="stats-count">
-          <router-link :to="'/articleList/all'">{{ userInfo.articleCount ? userInfo.articleCount : 150 }}</router-link>
+          <router-link :to="'/articleList/all'">{{ userInfo.articleCount ? userInfo.articleCount : 149 }}</router-link>
         </div>
       </div>
       <div class="stats-item">
         <div>分类</div>
         <div class="stats-count">
-          <router-link :to="'/articleList/all'">{{ userInfo.cateCount ? userInfo.cateCount : 10 }}</router-link>
+          <router-link :to="'/articleList/all'">{{ userInfo.cateCount ? userInfo.cateCount : 14 }}</router-link>
         </div>
       </div>
       <div class="stats-item">
         <div>标签</div>
         <div class="stats-count">
-          <router-link :to="'/articleList/all'">{{ userInfo.tagCount ? userInfo.tagCount : 20 }}</router-link>
+          <router-link :to="'/articleList/all'">{{ userInfo.tagCount ? userInfo.tagCount : 30 }}</router-link>
         </div>
       </div>
     </div>
@@ -69,7 +69,7 @@ export default {
 <style scoped>
 .info-wrapper {
   float: right;
-  padding: 35px 10px 20px;
+  padding: 35px 10px;
   width: 70%;
   /*height: 60vh;*/
   text-align: center;

@@ -1,10 +1,9 @@
 <template>
-  <span class="display-info">
+  <span class="display-info" v-if="this.article.id">
     <sapn v-if="isInDetail">
         <a-tag color="gray" @click="last(article.id)">上一篇 <a-icon type="double-left"/></a-tag>
         <a-tag color="gray" @click="next(article.id)">下一篇 <a-icon type="double-right"/></a-tag>
     </sapn>
-
 
     <a-tag class="display-info-item">创建
       <a-icon type="calendar"/>
@@ -14,7 +13,12 @@
       <a-icon type="calendar"/>
       : {{ article.updated|defaultValue(new Date())|dateTimeFormat }}
     </a-tag>
-    <a-tag> {{ article.hits }} <a-icon type="eye"/></a-tag>
+    <a-tag color="orange">{{ category.name || 'none' }}</a-tag>
+    <a-tag v-if="isLogin">{{ article.status }}</a-tag>
+    <!--    <a-tag> {{ article.hits }} <a-icon type="eye"/></a-tag>-->
+    <router-link :to="'/detail/'+article.id" v-if="article.id && !isInDetail">
+      <a-tag color="green">详情</a-tag>
+    </router-link>
     <a-checkable-tag v-if="isLogin" v-model="isNice"
                      @change="status=>changeNice(status,article.id)">
       <a-icon type="fire"/>
@@ -22,7 +26,7 @@
     <router-link :to="article.id|joinStrBefore('/edit/')" v-if="isLogin">
         <a-tag color="green">编辑</a-tag>
       </router-link>
-      <a-tag @click="deleteArticle" v-if="article.id && isLogin" color="red" ><span>删除</span></a-tag>
+      <a-tag @click="deleteArticle(article.id)" v-if="article.id && isLogin" color="red"><span>删除</span></a-tag>
   </span>
 </template>
 
@@ -32,7 +36,8 @@ export default {
   props: ['article', 'isInDetail', 'isEditing', 'isIndex'],
   data() {
     return {
-      isLogin: this.$store.state.isLogin
+      isLogin: this.$store.state.isLogin,
+      category: 'none'
     }
   },
   computed: {
@@ -42,7 +47,10 @@ export default {
   },
   mounted() {
     console.log('descrip');
-    console.log(this.article);
+    console.log(this.article.id);
+    if (this.article.id) {
+      this.getArticleMetaInfo(this.article.id)
+    }
   },
   methods: {
     next(id) {
@@ -59,7 +67,6 @@ export default {
           })
     },
     changeNice(status, articleId) {
-      console.log('11111111111', articleId);
       if (!articleId) {
         this.$message.error('请先保存文章')
         return;
@@ -79,6 +86,21 @@ export default {
       this.$api.deleteArticle(id).then(resp => {
         this.$message.success("删除成功")
       })
+    },
+    getArticleMetaInfo(articleId) {
+      this.$api.getArticleMetaInfo(articleId)
+          .then(response => {
+            const {category, tags} = response.data.data
+            this.category = category
+            this.tags = tags
+          })
+    }
+  },
+  watch: {
+    article(newVal, oldVal) {
+      if (newVal.id) {
+        this.getArticleMetaInfo(newVal.id)
+      }
     }
   }
 
@@ -88,6 +110,11 @@ export default {
 <style scoped>
 body {
   color: gray;
+}
+
+.display-info {
+  text-align: justify;
+  display: inline-block;
 }
 
 </style>

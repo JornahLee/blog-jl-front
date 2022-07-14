@@ -5,9 +5,6 @@
     </div>
     <div class="info">
       <article-descrip :article="article" :is-in-detail="true" :is-editing="true"></article-descrip>
-      <router-link :to="'/detail/'+article.id" v-if="article.id">
-        <a-tag color="green">详情页</a-tag>
-      </router-link>
       <a-tag @click="saveTitleAndContent" color="green"><span>保存</span></a-tag>
     </div>
     <div id="vditor"></div>
