@@ -1,53 +1,68 @@
 <template>
-  <span class="display-info" v-if="this.article.id">
-    <sapn v-if="isInDetail">
-        <a-tag color="gray" @click="last(article.id)">上一篇 <a-icon type="double-left"/></a-tag>
-        <a-tag color="gray" @click="next(article.id)">下一篇 <a-icon type="double-right"/></a-tag>
-    </sapn>
+  <div class="display-info" v-if="this.article.id">
+    <div class="part1">
+      <a-tag class="display-info-item">创建
+        <a-icon type="calendar"/>
+        <span v-if="isInDetail">: {{ article.created|defaultValue(new Date())| dateFormat }}</span>
+        <span v-else>: {{ article.created|defaultValue(new Date())| dateTimeFormat }}</span>
+      </a-tag>
+      <a-tag class="display-info-item">更新
+        <a-icon type="calendar"/>
+        <span v-if="isInDetail">: {{ article.updated|defaultValue(new Date())| dateFormat }}</span>
+        <span v-else>: {{ article.updated|defaultValue(new Date())| dateTimeFormat }}</span>
+      </a-tag>
+      <a-tag v-if="isLogin">{{ articleStatus }}</a-tag>
+      <a-tag color="orange">{{ category ? category.name : 'none' }}</a-tag>
+    </div>
+    <div class="part2">
+      <sapn v-if="isInDetail">
+        <a-tag color="gray" @click="last(article.id)">上一篇
+          <a-icon type="double-left"/>
+        </a-tag>
+        <a-tag color="gray" @click="next(article.id)">下一篇
+          <a-icon type="double-right"/>
+        </a-tag>
+      </sapn>
 
-    <a-tag class="display-info-item">创建
-      <a-icon type="calendar"/>
-      : {{ article.created|defaultValue(new Date())|dateTimeFormat }}
-    </a-tag>
-    <a-tag class="display-info-item">更新
-      <a-icon type="calendar"/>
-      : {{ article.updated|defaultValue(new Date())|dateTimeFormat }}
-    </a-tag>
-    <a-tag color="orange">{{ category.name || 'none' }}</a-tag>
-    <a-tag v-if="isLogin">{{ article.status }}</a-tag>
-    <!--    <a-tag> {{ article.hits }} <a-icon type="eye"/></a-tag>-->
-    <router-link :to="'/detail/'+article.id" v-if="article.id && !isInDetail">
-      <a-tag color="green">详情</a-tag>
-    </router-link>
-    <a-checkable-tag v-if="isLogin" v-model="isNice"
-                     @change="status=>changeNice(status,article.id)">
-      <a-icon type="fire"/>
-    </a-checkable-tag>
-    <router-link :to="article.id|joinStrBefore('/edit/')" v-if="isLogin">
+      <!--    <a-tag> {{ article.hits }} <a-icon type="eye"/></a-tag>-->
+      <router-link :to="'/detail/'+article.id" v-if="article.id && !isInDetail">
+        <a-tag color="green">详情</a-tag>
+      </router-link>
+      <a-checkable-tag v-if="isLogin" v-model="isNice"
+                       @change="status=>changeNice(status,article.id)">
+        <a-icon type="fire"/>
+      </a-checkable-tag>
+      <router-link :to="article.id|joinStrBefore('/edit/')" v-if="isLogin && !isEditing">
         <a-tag color="green">编辑</a-tag>
       </router-link>
       <a-tag @click="deleteArticle(article.id)" v-if="article.id && isLogin" color="red"><span>删除</span></a-tag>
-  </span>
+      <a-tag @click="publishArticle(article.id)" v-if="article.id && isLogin" color="green"><span>发布</span></a-tag>
+    </div>
+  </div>
 </template>
 
 <script>
+import * as ArticleStatus from '../../constant/articleStatus'
+
 export default {
   name: "ArticleDescrip",
   props: ['article', 'isInDetail', 'isEditing', 'isIndex'],
   data() {
     return {
       isLogin: this.$store.state.isLogin,
-      category: 'none'
+      category: {},
+      tempStatus: null
     }
   },
   computed: {
     isNice() {
       return this.article.recommendLevel > 0
+    },
+    articleStatus() {
+      return this.tempStatus || this.article.status;
     }
   },
   mounted() {
-    console.log('descrip');
-    console.log(this.article.id);
     if (this.article.id) {
       this.getArticleMetaInfo(this.article.id)
     }
@@ -85,6 +100,15 @@ export default {
     deleteArticle(id) {
       this.$api.deleteArticle(id).then(resp => {
         this.$message.success("删除成功")
+        this.tempStatus = ArticleStatus.DELETED
+        console.log(this.articleStatus);
+      })
+    },
+    publishArticle(id) {
+      let article = {id: id, status: ArticleStatus.PUBLISHED}
+      this.$api.saveOrUpdateArticle(article).then(resp => {
+        this.$message.success("发布成功")
+        this.tempStatus = ArticleStatus.PUBLISHED
       })
     },
     getArticleMetaInfo(articleId) {
@@ -112,9 +136,16 @@ body {
   color: gray;
 }
 
+.part2 {
+  margin-top: 3px;
+}
+
 .display-info {
   text-align: justify;
+  /*text-align-last: justify;*/
   display: inline-block;
+  margin: 2px;
+  /*width: 100%;*/
 }
 
 </style>

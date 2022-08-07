@@ -127,9 +127,6 @@ export default {
   font-size: 30px;
 }
 
-.meta-info {
-  text-align: center;
-}
 
 .article-content {
 

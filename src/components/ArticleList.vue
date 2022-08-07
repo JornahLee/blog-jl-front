@@ -9,6 +9,11 @@
           <a-tag color="green">编辑</a-tag>
         </router-link>
         <router-link :to="'/detail/'+li.id">{{ li.title }}</router-link>
+        <a-tag color="orange">{{ li.status || 'loading' }}</a-tag>
+        <a-tag class="display-info-item">
+          <a-icon type="calendar"/>
+          <span>: {{ li.created|defaultValue(new Date())| dateFormat }}</span>
+        </a-tag>
       </div>
     </div>
     <a-pagination :default-current="1" :total="total" v-if="total>pageSize"
