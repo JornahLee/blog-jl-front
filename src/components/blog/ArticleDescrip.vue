@@ -25,7 +25,7 @@
       </sapn>
 
       <!--    <a-tag> {{ article.hits }} <a-icon type="eye"/></a-tag>-->
-      <router-link :to="'/detail/'+article.id" v-if="article.id && !isInDetail">
+      <router-link :to="'/detail/'+article.id" v-if="article.id && isEditing">
         <a-tag color="green">详情</a-tag>
       </router-link>
       <a-checkable-tag v-if="isLogin" v-model="isNice"

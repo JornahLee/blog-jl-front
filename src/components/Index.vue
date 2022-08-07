@@ -22,7 +22,7 @@
         </div>
       </div>
       <div class="article-summary">
-        <vue-markdown class="markdown" :source="article.content"
+        <vue-markdown class="markdown" :source="article.content+' ... '"
         ></vue-markdown>
       </div>
      <a-divider/>
