@@ -32,19 +32,18 @@ export default {
     return {
       articleList: [],
       pageSize: 10,
-      pageNum: 1,
       loading: false,
       total: 0,
       sharedState: this.$store.state
     }
   },
-  props: ['type', 'value'],
+  props: ['type', 'value', 'pageNum'],
   mounted() {
     this.getData();
   },
   methods: {
     getData() {
-      this.getByPage(1, this.pageSize);
+      this.getByPage(this.pageNum, this.pageSize);
     },
     getByPage(pageNum, pageSize) {
       this.loading = true;
@@ -52,7 +51,7 @@ export default {
         sortField: "updated",
         sort: "desc",
         pageSize: pageSize,
-        pageNum: pageNum,
+        pageNum: pageNum | 1,
         queryKeyColumns: {}
       }
       let url;
@@ -77,10 +76,14 @@ export default {
     }
   },
   watch: {
+    'pageNum'(to, from) {
+      let value = this.value | -1
+      this.$router.push(`/articleList/${this.type}/${value}/page/${to}`)
+    },
     '$route'(to, from) {
       console.log(this.type);
       console.log(this.value);
-      this.getByPage(1, this.pageSize);
+      // this.getByPage(1, this.pageSize);
     }
   }
 }
@@ -101,7 +104,8 @@ export default {
   border-bottom: 1px solid black;
   margin-bottom: 10px;
 }
-.article-title{
+
+.article-title {
   font-size: 16px;
 }
 

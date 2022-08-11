@@ -8,19 +8,19 @@
       <div class="stats-item">
         <div>随笔</div>
         <div class="stats-count">
-          <router-link :to="'/articleList/all'">{{ userInfo.articleCount ? userInfo.articleCount : 149 }}</router-link>
+          <router-link :to="'/articleList/all/page/1'">{{ userInfo.articleCount ? userInfo.articleCount : 149 }}</router-link>
         </div>
       </div>
       <div class="stats-item">
         <div>分类</div>
         <div class="stats-count">
-          <router-link :to="'/articleList/all'">{{ userInfo.cateCount ? userInfo.cateCount : 14 }}</router-link>
+          <router-link :to="'/articleList/all/page/1'">{{ userInfo.cateCount ? userInfo.cateCount : 14 }}</router-link>
         </div>
       </div>
       <div class="stats-item">
         <div>标签</div>
         <div class="stats-count">
-          <router-link :to="'/articleList/all'">{{ userInfo.tagCount ? userInfo.tagCount : 30 }}</router-link>
+          <router-link :to="'/articleList/all/page/1'">{{ userInfo.tagCount ? userInfo.tagCount : 30 }}</router-link>
         </div>
       </div>
     </div>

@@ -79,9 +79,9 @@ export default {
       if (this.selected) {
         const {type, id} = this.selected
         console.log(`/articleList/${type}/${id}`)
-        this.$router.push(`/articleList/${type}/${id}`)
+        this.$router.push(`/articleList/${type}/${id}/page/1`)
       } else {
-        this.$router.push('/articleList/all')
+        this.$router.push('/articleList/all/page/1')
       }
     },
     getAllTag: function () {

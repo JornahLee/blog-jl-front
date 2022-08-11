@@ -2,7 +2,7 @@
   <div class="index-wrapper">
     <div class="inner-header1">
       <a-tag color="green">
-        <router-link :to="'/articleList/all'">所有文章</router-link>
+        <router-link :to="'/articleList/all/page/1'">所有文章</router-link>
       </a-tag>
     </div>
     <div class="stats-info inner-header2">
@@ -27,7 +27,7 @@
       </div>
      <a-divider/>
     </div>
-    <router-link :to="'/articleList/all'">
+    <router-link :to="'/articleList/all/page/1'">
       <div class="more">
         查看更多
       </div>

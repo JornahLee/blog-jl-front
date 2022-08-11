@@ -51,7 +51,7 @@
       </div>
       <recent-read class="show-recent"></recent-read>
       <div class="to-articleList">
-        <router-link to="/articleList/all">
+        <router-link to="/articleList/all/page/1">
           <a-icon type="unordered-list" style="color: black;"/>
         </router-link>
       </div>

@@ -13,7 +13,7 @@
     <div>
       <div>分类:
         <span v-if="this.category!==null">
-          <router-link :to="'/articleList/byCate/'+this.category.id">{{ this.category.name }}</router-link>
+          <router-link :to="`/articleList/byCate/${this.category.id}/page/1`">{{ this.category.name }}</router-link>
         </span>
         <span v-else>无</span>
       </div>

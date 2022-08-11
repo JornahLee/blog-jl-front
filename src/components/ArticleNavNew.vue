@@ -48,11 +48,11 @@ export default {
       } else if ('byTag' === type) {
         this.getAllTag();
       }else if ('all' === type){
-        this.$router.push('/articleList/all')
+        this.$router.push('/articleList/all/page/1')
       }
     },
     changeList: function (e) {
-      this.$router.push(`/articleList/${this.selected}/${e.target.value}`)
+      this.$router.push(`/articleList/${this.selected}/${e.target.value}/page/1`)
     },
     getAllTag: function () {
       let url = '/blog/meta/tag/list'

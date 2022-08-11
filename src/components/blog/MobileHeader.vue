@@ -27,7 +27,7 @@
             </a-menu-item>
 
             <a-menu-item>
-              <router-link to="/articleList/byCate/40">
+              <router-link to="/articleList/byCate/40/page/1">
                 <a-icon type="carry-out"/>
               </router-link>
             </a-menu-item>
@@ -39,7 +39,7 @@
         </a-dropdown>
       </div>
       <div class="to-articleList">
-        <router-link to="/articleList/all">
+        <router-link to="/articleList/all/page/1">
           <a-icon type="home"/>
         </router-link>
       </div>

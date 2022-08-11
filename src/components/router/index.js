@@ -37,7 +37,7 @@ const routes = [
         }
     },
     {
-        path: '/articleList/:type/:value?', components: {
+        path: '/articleList/:type/:value?/page/:pageNum?', components: {
             articleList: () => import('../ArticleList.vue'),
             articleNav: () => import('../ArticleNav.vue'),
             blank: () => import('../Blank.vue')
