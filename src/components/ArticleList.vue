@@ -51,7 +51,7 @@ export default {
         sortField: "updated",
         sort: "desc",
         pageSize: pageSize,
-        pageNum: pageNum | 1,
+        pageNum: pageNum || 1,
         queryKeyColumns: {}
       }
       let url;
@@ -77,7 +77,7 @@ export default {
   },
   watch: {
     'pageNum'(to, from) {
-      let value = this.value | -1
+      let value = this.value || 1
       this.$router.push(`/articleList/${this.type}/${value}/page/${to}`)
     },
     '$route'(to, from) {
