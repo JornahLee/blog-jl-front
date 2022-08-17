@@ -14,6 +14,7 @@
 import Vditor from 'vditor';
 import 'vditor/dist/index.css';
 import ArticleDescrip from "./blog/ArticleDescrip";
+import MD5 from 'js-md5';
 
 export default {
   name: "Edit",
@@ -22,10 +23,13 @@ export default {
     return {
       article: {
         title: '',
-        content: ''
+        content: '',
+        previousContent: '',
       },
       contentEditor: {},
-      saving: false
+      saving: false,
+      autoSaveEnable: true,
+      workingInterval: null,
     }
   },
   props: ['articleId'],
@@ -33,26 +37,27 @@ export default {
     this.getHeight();
     this.initEditor();
     this.getArticle(this.articleId)
+    this.autoSaveIntervalSetup(this.autoSaveEnable)
   },
   methods: {
     handleChange(value) {
       console.log(`selected ${value}`);
     },
-    saveTitleAndContent: function () {
+    saveTitleAndContent: function (isAutoSave) {
       this.article.content = this.contentEditor.getValue()
       const emptyReg = /^\s*$/i
       if (emptyReg.test(this.article.title) || emptyReg.test(this.article.content)) {
         this.$message.warning("请输入标题或者内容")
         return;
       }
-
-
+      this.article.previousContent = this.article.content
       const key = 'updatable';
       this.$message.loading({content: '保存中...', key});
       let params = {
         id: this.article.id,
         title: this.article.title,
-        content: this.article.content
+        content: this.article.content,
+        version: ++this.article.version || 0
       }
       this.saving = true;
       this.$api.saveOrUpdateArticle(params).then(resp => {
@@ -60,9 +65,13 @@ export default {
         if (this.article.id === undefined) {
           this.$router.push('/edit/' + id)
         }
-        this.$message.success({content: '保存成功...', key, duration: 1});
+        this.$message.success({
+          content: isAutoSave ? '自动保存成功...' : '保存成功...',
+          key,
+          duration: isAutoSave ? 0.5 : 1,
+        });
       }).catch(err => {
-        this.$message.success({content: '保存失败', key, duration: 1});
+        this.$message.error({content: isAutoSave ? '自动保存失败' : '保存失败', key, duration: 1});
       }).finally(() => {
         this.saving = false
       })
@@ -72,9 +81,11 @@ export default {
         let article = resp.data.data
         const defaultArticle = {
           title: '',
-          content: ''
+          content: '',
+          version: 0
         }
         article = (article === null || Object.keys(article).length === 0) ? defaultArticle : article;
+        article.previousContent = article.content
         this.article = article
         this.contentEditor.setValue(article.content)
         this.$bus.$emit('articleEditMetaInit', article)
@@ -150,6 +161,24 @@ export default {
             click: () => {
               this.saveTitleAndContent()
             },
+          },
+          {
+            // hotkey: '⇧⌘S',
+            name: 'autoSave',
+            // tipPosition: 's',
+            tip: '自动保存',
+            className: 'auto-save',
+            icon: '<svg t="1660719130535" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6547" width="200" height="200"><path d="M510.407736 960.414823c-60.290131 0-118.797663-11.81714-173.898609-35.122939-53.199643-22.50148-100.970646-54.706973-141.983735-95.720062s-73.218582-88.784092-95.720062-141.983735c-23.305799-55.101969-35.122939-113.608477-35.122939-173.898609 0-60.290131 11.81714-118.797663 35.122939-173.898609 22.50148-53.200666 54.706973-100.970646 95.720062-141.983735 41.013089-41.014112 88.784092-73.218582 141.983735-95.721085 55.101969-23.305799 113.608477-35.122939 173.898609-35.122939s118.797663 11.81714 173.898609 35.122939c53.199643 22.502503 100.970646 54.706973 141.983735 95.721085 41.013089 41.013089 73.218582 88.784092 95.720062 141.983735 23.305799 55.100946 35.122939 113.608477 35.122939 173.898609 0 60.290131-11.81714 118.797663-35.122939 173.898609-22.50148 53.199643-54.706973 100.970646-95.720062 141.983735s-88.784092 73.218582-141.983735 95.720062C629.205399 948.597683 570.697867 960.414823 510.407736 960.414823zM510.407736 130.408095c-102.377692 0-198.627826 39.868009-271.0206 112.260783-72.392774 72.392774-112.260783 168.642908-112.260783 271.0206s39.868009 198.627826 112.260783 271.0206c72.39175 72.392774 168.642908 112.260783 271.0206 112.260783 102.377692 0 198.62885-39.868009 271.0206-112.260783s112.260783-168.642908 112.260783-271.0206-39.868009-198.627826-112.260783-271.0206S612.786451 130.408095 510.407736 130.408095z" p-id="6548"></path><path d="M704.347796 512.541329 512.731664 512.541329 512.731664 292.051589 411.414117 292.051589 411.414117 613.858876 704.347796 613.858876Z" p-id="6549"></path></svg>',
+            click: (event, vditor) => {
+              this.autoSaveEnable = !this.autoSaveEnable
+              let className = vditor.toolbar.elements.autoSave.className;
+              if (!this.autoSaveEnable) {
+                className = className.replace("auto-save", "auto-save-disable")
+              } else {
+                className = className.replace("auto-save-disable", "auto-save")
+              }
+              vditor.toolbar.elements.autoSave.className = className
+            },
           }],
       })
     }
@@ -195,8 +224,20 @@ export default {
     },
     getHeight(percent) {
       const ret = document.documentElement.clientHeight * (percent / 100)
-      console.log(ret)
       return ret
+    },
+    autoSaveIntervalSetup(enable) {
+      if (enable) {
+        this.workingInterval = setInterval(() => {
+          console.log('trying auto save')
+          if (MD5(this.contentEditor.getValue() || '') !== MD5(this.article.previousContent || '')) {
+            console.log('do auto save')
+            this.saveTitleAndContent(true)
+          }
+        }, 1000 * 30)
+      } else {
+        clearInterval(this.workingInterval)
+      }
     }
   }, watch: {
     //监听路由变化
@@ -204,6 +245,9 @@ export default {
       if (to.path !== from.path) {
         this.getArticle(this.articleId)
       }
+    },
+    'autoSaveEnable'(to, from) {
+      this.autoSaveIntervalSetup(to);
     }
   }
 }
@@ -234,4 +278,18 @@ export default {
 #vditor {
   height: 60%
 }
+
+.auto-save-disable {
+  background-color: gray;
+  /*border-radius: 500px;*/
+  /*stroke: red;*/
+}
+
+.auto-save {
+  /*background-color: #52c41a;*/
+  /*border-radius: 100%;*/
+  /*fill:red;*/
+  /*stroke: red;*/
+}
+
 </style>

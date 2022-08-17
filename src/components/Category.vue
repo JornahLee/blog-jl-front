@@ -2,7 +2,7 @@
   <div v-if="toc.length >0 " class="cate">
     <div class="cate-title">目录</div>
     <hr/>
-    <a-anchor class="anchorContainer">
+    <a-anchor wrapperClass="anchorContainer">
       <a-anchor-link :class="item.level|joinStrBefore('anchor')" v-for="(item,index) in toc" :key="index"
                      :title="item.content" :href="item.anchor|joinStrBefore('#')"/>
     </a-anchor>
@@ -70,6 +70,11 @@ export default {
   text-align: left;
   margin-left: 10px;
   font-size: 20px;
+}
+
+.anchorContainer{
+  max-height: 74vh;
+  min-height: 60vh;
 }
 
 </style>

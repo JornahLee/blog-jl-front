@@ -35,6 +35,7 @@ axios.interceptors.response.use(resp => {
     return resp;
 }, err => {
     let resp = err.response
+    let {msg} = resp.data
     if (resp.status === 504 || resp.status === 404) {
         message.error({content: '服务器被吃了⊙﹏⊙∥'})
     } else if (resp.status === 403) {
@@ -45,6 +46,7 @@ axios.interceptors.response.use(resp => {
     } else {
         message.error({content: '未知错误!'});
     }
+    message.error({content: msg});
     return Promise.resolve(err);
 })
 

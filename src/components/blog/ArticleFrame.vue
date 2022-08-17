@@ -91,7 +91,6 @@ export default {
     getArticleMetaInfo() {
       this.$api.getArticleMetaInfo(this.articleId)
           .then(response => {
-            console.log(response);
             const {category, tags} = response.data.data
             this.category = category
             this.tags = tags
@@ -108,7 +107,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .article-frame-wrapper {
   background-color: #ffff;
   /*border: 1px solid #e0d8d8;*/

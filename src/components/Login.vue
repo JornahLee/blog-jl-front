@@ -48,7 +48,7 @@ export default {
         this.$store.setUsername(username)
         this.$store.setToken(accessToken)
         this.$router.push("/index")
-        this.$message.success({content:"登陆成功"})
+        this.$message.success({content:"登录成功"})
       })
 
     }
