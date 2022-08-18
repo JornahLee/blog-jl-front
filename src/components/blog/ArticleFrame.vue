@@ -81,6 +81,7 @@ export default {
       this.$api.getArticleById(this.articleId)
           .then(response => {
             this.article = response.data.data
+            document.title = this.article.title
             this.sendMsg();
             this.timer = setTimeout(() => {
               this.searchInPage()

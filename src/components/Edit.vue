@@ -89,6 +89,7 @@ export default {
         this.article = article
         this.contentEditor.setValue(article.content)
         this.$bus.$emit('articleEditMetaInit', article)
+        document.title = '(Blog) ' + article.title
       })
     }
     ,
