@@ -242,7 +242,7 @@ export default {
             console.log('do auto save')
             this.saveTitleAndContent(true)
           }
-        }, 1000 * 5)
+        }, 1000 * 30)
       } else {
         clearInterval(this.workingInterval)
       }
