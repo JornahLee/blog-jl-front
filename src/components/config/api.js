@@ -1,9 +1,10 @@
 import myAxios from './myAxios'
 
 export default {
-    getArticleById: function (articleId) {
+    getArticleById: function (articleId, passphrase) {
         let url = '/blog/article/' + articleId
-        return myAxios.get(url)
+        let params = {passphrase: passphrase}
+        return myAxios.get(url,{params})
     },
     getOwnerInfo() {
         let url = '/blog/user/info'

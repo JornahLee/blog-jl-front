@@ -30,6 +30,7 @@
         <router-view name="index"></router-view>
         <router-view name="music"></router-view>
         <router-view name="login"></router-view>
+        <router-view name="tool"></router-view>
       </transition>
 
     </template>

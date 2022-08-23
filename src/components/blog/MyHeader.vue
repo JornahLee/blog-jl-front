@@ -1,22 +1,22 @@
 <template>
   <div>
-    <router-link to="/index">
-      <div class="home">
-        <div class="blog-name">Jornah's Blog</div>
-      </div>
-    </router-link>
+    <div class="home" @dblclick="routePush(`/tool`)" @click="routePush('/index')">
+      <a class="blog-name">Jornah's Blog</a>
+    </div>
+
     <div class="search-bar">
       <my-search></my-search>
     </div>
     <div class="xxx-bar">
       <div class="to-login" v-if="!isLogin">
-        <router-link to="/login" > <a-icon type="user" style="color: black;" /></router-link>
+        <router-link to="/login">
+          <a-icon type="user" style="color: black;"/>
+        </router-link>
       </div>
       <div class="manage-drop" v-else>
         <a-dropdown>
           <a class="ant-dropdown-link">
-<!--            {{ username }}-->
-            <a-icon type="user" style="color: black" />
+            <a-icon type="user" style="color: black"/>
           </a>
           <a-menu slot="overlay">
             <a-menu-item>
@@ -86,15 +86,20 @@ export default {
     logout() {
       this.$store.resetState()
       this.$router.go(0)
+    },
+    routePush(routePath) {
+      this.$router.push(routePath)
     }
   }
 }
 </script>
 
 <style scoped>
-.blog-name{
+.blog-name {
   margin-top: 8px;
+  display: block;
   font-size: 20px;
+  color: white;
 }
 
 .home {

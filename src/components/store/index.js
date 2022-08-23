@@ -7,6 +7,12 @@ export default {
         username: localStorage.getItem('username'),
         email: localStorage.getItem('email'),
         token: localStorage.getItem('token'),
+        passphrase: localStorage.getItem('passphrase'),
+
+    },
+    updatePassphrase(passphrase) {
+        this.state.passphrase = passphrase
+        localStorage.setItem('passphrase', passphrase)
     },
     resetState() {
         if (this.debug) console.log('store state reset')
@@ -18,6 +24,8 @@ export default {
         localStorage.removeItem('username')
         localStorage.removeItem('token')
         localStorage.removeItem('email')
+        localStorage.removeItem('passphrase')
+
 
     },
     setIsLogin(isLogin) {

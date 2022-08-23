@@ -11,8 +11,8 @@
         <span v-if="isInDetail">: {{ article.updated|defaultValue(new Date())| dateFormat }}</span>
         <span v-else>: {{ article.updated|defaultValue(new Date())| dateTimeFormat }}</span>
       </a-tag>
-      <a-tag v-if="isLogin">{{ articleStatus }}</a-tag>
-      <a-tag color="orange">{{ category ? category.name : 'none' }}</a-tag>
+      <a-tag v-if="isLogin">{{ articleStatus || 'none' }}</a-tag>
+      <a-tag color="orange">{{ category ? category.name || 'none' : 'none' }}</a-tag>
     </div>
     <div class="part2">
       <sapn v-if="isInDetail">
@@ -37,12 +37,23 @@
       </router-link>
       <a-tag @click="deleteArticle(article.id)" v-if="article.id && isLogin" color="red"><span>删除</span></a-tag>
       <a-tag @click="publishArticle(article.id)" v-if="article.id && isLogin" color="green"><span>发布</span></a-tag>
+      <a-select class="type-select"
+                ref="select"
+                size="small"
+                style="min-width: 75px"
+                v-model:value="articleType"
+                @change="handleArticleTypeChange"
+      >
+        <a-select-option v-for="item in articleTypes" :key="item">{{ item }}</a-select-option>
+      </a-select>
+
     </div>
   </div>
 </template>
 
 <script>
 import * as ArticleStatus from '../../constant/articleStatus'
+import config from '../../config/config'
 
 export default {
   name: "ArticleDescrip",
@@ -51,7 +62,9 @@ export default {
     return {
       isLogin: this.$store.state.isLogin,
       category: {},
-      tempStatus: null
+      tempStatus: null,
+      articleTypes: config.article.types,
+      articleType: this.article.type || 'none',
     }
   },
   computed: {
@@ -118,6 +131,15 @@ export default {
             this.category = category
             this.tags = tags
           })
+    },
+    handleArticleTypeChange(value) {
+      this.articleType = value
+      console.log(value)
+      console.log(this.article.id);
+      let article = {id: this.article.id, type: value}
+      this.$api.saveOrUpdateArticle(article).then(resp => {
+        this.$message.success("更新文章类型成功")
+      })
     }
   },
   watch: {
@@ -126,6 +148,7 @@ export default {
         this.getArticleMetaInfo(newVal.id)
       }
     }
+
   }
 
 }

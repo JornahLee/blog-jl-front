@@ -5,19 +5,12 @@
     </a-spin>
     <div class="articleList">
       <div v-for="li in articleList" :key="li.id" class="articleName">
-        <div v-if="sharedState.isLogin">
-          <router-link :to="li.id|joinStrBefore('/edit/')">
-            <a-tag color="green">编辑</a-tag>
+        <article-descrip :article="li"></article-descrip>
+        <div>
+          <router-link :to="'/detail/'+li.id">
+            <span class="article-title">{{ li.title }}</span>
           </router-link>
-          <a-tag>{{ li.status || 'loading' }}</a-tag>
-          <a-tag class="display-info-item">
-            <a-icon type="calendar"/>
-            <span>: {{ li.created|defaultValue(new Date())| dateFormat }}</span>
-          </a-tag>
         </div>
-        <router-link :to="'/detail/'+li.id">
-          <span class="article-title">{{ li.title }}</span>
-        </router-link>
       </div>
     </div>
     <a-pagination :default-current="1" :total="total" v-if="total>pageSize"
@@ -27,7 +20,9 @@
 </template>
 
 <script>
+import ArticleDescrip from "./blog/ArticleDescrip";
 export default {
+  components: {ArticleDescrip},
   data() {
     return {
       articleList: [],

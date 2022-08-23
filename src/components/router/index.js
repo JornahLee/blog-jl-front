@@ -18,7 +18,7 @@ const routes = [
         path: '/index', components: {
             index: () => import('../Index.vue'),
             blank: () => import('../Blank'),
-            userInfo:()=> import('../UserInfo.vue')
+            userInfo: () => import('../UserInfo.vue')
         }
     },
     {
@@ -78,6 +78,11 @@ const routes = [
         path: '/login', components: {
             login: () => import('../Login.vue'),
             blank: () => import('../Blank.vue'),
+        }
+    },
+    {
+        path: '/tool', components: {
+            tool: () => import('../tool/Tool.vue')
         }
     }
 ]

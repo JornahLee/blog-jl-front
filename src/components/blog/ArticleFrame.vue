@@ -2,7 +2,7 @@
   <div class="article-frame-wrapper" :key="articleId">
     <div class="article-title">{{ article.title }}</div>
     <div class="meta-info">
-      <article-descrip :article="article" :is-in-detail="true"></article-descrip>
+      <article-descrip :article="article" :is-in-detail="true" v-if="articleLoaded"></article-descrip>
     </div>
     <hr/>
     <div class="article-content">
@@ -46,6 +46,7 @@ export default {
         content: "loading",
         title: "loading"
       },
+      articleLoaded: false,
       category: null,
       tags: null,
       sharedState: this.$store.state
@@ -82,6 +83,7 @@ export default {
           .then(response => {
             this.article = response.data.data
             document.title = this.article.title
+            this.articleLoaded = true
             this.sendMsg();
             this.timer = setTimeout(() => {
               this.searchInPage()

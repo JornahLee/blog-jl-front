@@ -4,7 +4,8 @@
       <a-input size="large" placeholder="这里是标题" v-model="article.title" addonBefore="标题"/>
     </div>
     <div class="info">
-      <article-descrip :article="article" :is-in-detail="true" :is-editing="true"></article-descrip>
+      <article-descrip :article="article" :is-in-detail="true" :is-editing="true"
+                       v-if="articleLoaded "></article-descrip>
     </div>
     <div id="vditor"></div>
   </div>
@@ -24,9 +25,11 @@ export default {
       article: {
         title: '',
         content: '',
-        previousContent: '',
       },
+      previousContent: '',
+      articleLoaded: false,
       contentEditor: {},
+      editorLoaded: true,
       saving: false,
       autoSaveEnable: true,
       workingInterval: null,
@@ -36,13 +39,12 @@ export default {
   mounted() {
     this.getHeight();
     this.initEditor();
-    this.getArticle(this.articleId)
+    if (this.editorLoaded) {
+      this.getArticle(this.articleId)
+    }
     this.autoSaveIntervalSetup(this.autoSaveEnable)
   },
   methods: {
-    handleChange(value) {
-      console.log(`selected ${value}`);
-    },
     saveTitleAndContent: function (isAutoSave) {
       this.article.content = this.contentEditor.getValue()
       const emptyReg = /^\s*$/i
@@ -50,13 +52,14 @@ export default {
         this.$message.warning("请输入标题或者内容")
         return;
       }
-      this.article.previousContent = this.article.content
+      this.previousContent = this.article.content
       const key = 'updatable';
       this.$message.loading({content: '保存中...', key});
       let params = {
         id: this.article.id,
         title: this.article.title,
         content: this.article.content,
+        type: 'ESSAY',
         version: ++this.article.version || 0
       }
       this.saving = true;
@@ -77,7 +80,10 @@ export default {
       })
     },
     getArticle: function (id) {
-      this.$axios.get('/blog/article/' + id).then(resp => {
+      if (id < 0) {
+        return;
+      }
+      this.$api.getArticleById(id, this.$store.state.passphrase).then(resp => {
         let article = resp.data.data
         const defaultArticle = {
           title: '',
@@ -85,11 +91,12 @@ export default {
           version: 0
         }
         article = (article === null || Object.keys(article).length === 0) ? defaultArticle : article;
-        article.previousContent = article.content
+        this.previousContent = article.content
         this.article = article
         this.contentEditor.setValue(article.content)
         this.$bus.$emit('articleEditMetaInit', article)
         document.title = '(Blog) ' + article.title
+        this.articleLoaded = true
       })
     }
     ,
@@ -115,6 +122,7 @@ export default {
           enable: false,
         },
         after: () => {
+          this.editorLoaded = true
           this.getArticle(this.articleId)
         },
         toolbar: [
@@ -224,18 +232,17 @@ export default {
       })
     },
     getHeight(percent) {
-      const ret = document.documentElement.clientHeight * (percent / 100)
-      return ret
+      return document.documentElement.clientHeight * (percent / 100)
     },
     autoSaveIntervalSetup(enable) {
       if (enable) {
         this.workingInterval = setInterval(() => {
           console.log('trying auto save')
-          if (MD5(this.contentEditor.getValue() || '') !== MD5(this.article.previousContent || '')) {
+          if (MD5(this.contentEditor.getValue() || '') !== MD5(this.previousContent || '')) {
             console.log('do auto save')
             this.saveTitleAndContent(true)
           }
-        }, 1000 * 30)
+        }, 1000 * 5)
       } else {
         clearInterval(this.workingInterval)
       }
@@ -250,6 +257,10 @@ export default {
     'autoSaveEnable'(to, from) {
       this.autoSaveIntervalSetup(to);
     }
+  },
+  destroyed() {
+    console.log('destroyed to stop interval')
+    this.autoSaveIntervalSetup(false);
   }
 }
 </script>
