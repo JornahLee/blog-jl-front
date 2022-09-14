@@ -7,7 +7,7 @@ export default {
         username: localStorage.getItem('username'),
         email: localStorage.getItem('email'),
         token: localStorage.getItem('token'),
-        passphrase: localStorage.getItem('passphrase'),
+        passphrase: localStorage.getItem('passphrase') | 1234,
 
     },
     updatePassphrase(passphrase) {

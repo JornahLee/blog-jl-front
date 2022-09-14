@@ -12,7 +12,7 @@
       </a-radio-button>
     </a-radio-group>
     <br/>
-    <a-input v-model="passphrase" style="width: 100px"/>
+    <a-input v-model="passphrase" style="width: 100px" type="password" @pressEnter="getArticleById(article.id)"/>
     <a-button @click="getArticleById(article.id)">reload</a-button>
     <br/>
     <div id="myVditor"></div>
@@ -28,9 +28,10 @@ export default {
     return {
       userState: this.$store.state,
       contentEditor: {},
+      badPassphrase: false,
       toolType: 'clipboard',
       article: {id: 1},
-      passphrase: this.$store.state.passphrase
+      passphrase: this.$store.state.passphrase | 1234
     };
   },
   mounted() {
@@ -64,9 +65,14 @@ export default {
         this.article = article
         this.contentEditor.setValue(article.content)
         document.title = '(Blog) ' + article.title
+        this.badPassphrase = resp.status === 206
       })
     },
     saveTitleAndContent: function () {
+      if (this.badPassphrase) {
+        this.$message.error({content: '错误的passphrase，无法保存'})
+        return;
+      }
       this.article.content = this.contentEditor.getValue()
       this.article.version++
       let params = this.article
@@ -154,6 +160,15 @@ export default {
   watch: {
     passphrase(newVal, oldVal) {
       this.$store.updatePassphrase(newVal)
+    },
+    badPassphrase(newVal, oldVal) {
+      if (newVal) {
+        // console.log(this.contentEditor);
+        this.contentEditor.disabled()
+      } else {
+        this.contentEditor.enable()
+      }
+
     }
   },
   destroyed() {

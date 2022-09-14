@@ -37,7 +37,8 @@
       </router-link>
       <a-tag @click="deleteArticle(article.id)" v-if="article.id && isLogin" color="red"><span>删除</span></a-tag>
       <a-tag @click="publishArticle(article.id)" v-if="article.id && isLogin" color="green"><span>发布</span></a-tag>
-      <a-select class="type-select"
+      <a-select v-if="isLogin"
+                class="type-select"
                 ref="select"
                 size="small"
                 style="min-width: 75px"

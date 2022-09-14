@@ -73,8 +73,8 @@ export default {
 }
 
 .anchorContainer{
-  max-height: 74vh;
-  min-height: 60vh;
+  height:  72vh;
+  /*min-height: 60vh;*/
 }
 
 </style>
