@@ -23,9 +23,6 @@
               <router-link to="/edit/-1">新文章</router-link>
             </a-menu-item>
             <a-menu-item>
-              <router-link to="/music">音乐</router-link>
-            </a-menu-item>
-            <a-menu-item>
               <a @click="logout">注销</a>
             </a-menu-item>
           </a-menu>

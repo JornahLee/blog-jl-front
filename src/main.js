@@ -24,10 +24,10 @@ import Button from 'ant-design-vue/lib/button';
 Vue.use(Button);
 
 
-import 'ant-design-vue/lib/upload/style/css'
-import Upload from 'ant-design-vue/lib/upload';
-
-Vue.use(Upload);
+// import 'ant-design-vue/lib/upload/style/css'
+// import Upload from 'ant-design-vue/lib/upload';
+//
+// Vue.use(Upload);
 
 import 'ant-design-vue/lib/form-model/style/css'
 import FormModel from 'ant-design-vue/lib/form-model';

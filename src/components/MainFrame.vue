@@ -42,12 +42,12 @@
 </template>
 
 <script>
-import vueLive2d from 'vue-live2d'
+// import vueLive2d from 'vue-live2d'
 
 export default {
   name: 'MainFrame',
   components: {
-    vueLive2d
+    // vueLive2d
   },
   data() {
     return {

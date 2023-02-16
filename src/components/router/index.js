@@ -2,7 +2,6 @@
 // import ArticleFrame from '@/components/blog/ArticleFrame'
 // import Blank from '@/components/Blank'
 // import About from '@/components/About'
-// import Category from '@/components/Category'
 // import articleList from '@/components/articleList'
 // import Archive from '@/components/Archive'
 // import Tags from '@/components/Tags'
@@ -11,7 +10,6 @@
 
 // Vue.use(VueRouter)
 
-// const Category = () => import('../Category.vue');
 const routes = [
     {path: '/', redirect: '/index'},
     {
@@ -66,12 +64,6 @@ const routes = [
             editLeftSide: () => import('../admin/EditLeftSideV2.vue')
         }, props: {
             edit: true
-        }
-    },
-    {
-        path: '/music', components: {
-            music: () => import('../Music.vue'),
-            blank: () => import('../Blank.vue'),
         }
     },
     {

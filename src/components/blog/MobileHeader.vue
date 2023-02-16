@@ -22,9 +22,6 @@
             <a-menu-item>
               <router-link to="/edit/-1">新文章</router-link>
             </a-menu-item>
-            <a-menu-item>
-              <router-link to="/music">音乐</router-link>
-            </a-menu-item>
 
             <a-menu-item>
               <router-link to="/articleList/byCate/40/page/1">
