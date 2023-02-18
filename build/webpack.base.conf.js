@@ -24,7 +24,9 @@ module.exports = {
     externals: {
         'vue': 'Vue',
         'vue-router': 'VueRouter',
-        'axios':'axios'
+        'axios':'axios',
+        'ant-design-vue': 'antd',
+        'vditor':'Vditor'
     },
     resolve: {
         extensions: ['.js', '.vue', '.json'],

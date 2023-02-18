@@ -19,8 +19,8 @@
   </div>
 </template>
 <script>
-import Vditor from 'vditor';
-import 'vditor/dist/index.css';
+// import Vditor from 'vditor';
+// import 'vditor/dist/index.css';
 
 export default {
   name: "Tool",

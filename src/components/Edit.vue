@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import Vditor from 'vditor';
-import 'vditor/dist/index.css';
+// import Vditor from 'vditor';
+// import 'vditor/dist/index.css';
 import ArticleDescrip from "./blog/ArticleDescrip";
 import MD5 from 'js-md5';
 import timeUtil from '../utils/timeUtil'
