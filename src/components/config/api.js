@@ -1,36 +1,55 @@
 import myAxios from './myAxios'
 
+// key = url
+const apiCache = {}
+
+// key = article id
+const metaInfoCache = {}
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms))
+}
+
+function getCache(cacheSource, cacheKey, runApi) {
+    if (cacheSource[cacheKey]) {
+        console.log("cache hit, cacheKey:" + cacheKey)
+        return cacheSource[cacheKey];
+    } else {
+        const ret = runApi()
+        cacheSource[cacheKey] = ret;
+        return ret;
+    }
+}
+
+
 export default {
     getArticleById: function (articleId, passphrase) {
         let url = '/blog/article/' + articleId
         let params = {passphrase: passphrase}
-        return myAxios.get(url,{params})
+        return myAxios.get(url, {params})
     },
-    getOwnerInfo() {
+    getSiteInfo() {
         let url = '/blog/user/info'
-        return myAxios.get(url);
-    },
-    getIndexStatsInfo() {
-        let url = '/blog/article/stats/info'
-        return myAxios.get(url);
+        return getCache(apiCache, url, () => myAxios.get(url))
     },
     getRecommendList(size) {
         let url = '/blog/article/list/recommended'
         let params = {size: size}
-        return myAxios.get(url, {params})
+        return getCache(apiCache, url, () => myAxios.get(url, {params}))
     },
     getArticleMetaInfo(articleId) {
-        let url = `/blog/article//meta/${articleId}`
-        return myAxios.get(url)
+        //get cache 1st
+        let url = `/blog/article/meta/${articleId}`
+        sleep(500)
+        return getCache(metaInfoCache, articleId, () => myAxios.get(url))
     },
-    getAllTag() {
-        let url = '/blog/meta/tag/list'
-        return myAxios.get(url);
-    },
-    getAllCategory() {
-        let url = '/blog/meta/category/list'
-        return myAxios.get(url)
-    },
+    // getAllTag() {
+    //     let url = '/blog/meta/tag/list'
+    //     return myAxios.get(url);
+    // },
+    // getAllCategory() {
+    //     let url = '/blog/meta/category/list'
+    //     return myAxios.get(url)
+    // },
     saveMetaInfo(articleId, cateId, tagIds) {
         const url = '/blog/meta/save'
         let params = {
@@ -71,6 +90,35 @@ export default {
     },
     yiyan() {
         return myAxios.get('https://v1.hitokoto.cn')
+    },
+    getRecentRead() {
+        let url = '/blog/user/recently-read'
+        return myAxios.get(url);
+    },
+    saveStatisticsResult(articleId, readDuration, startReadTime) {
+        let url = '/blog/user/recently-read'
+        return myAxios.put(url, {
+            articleId: id,
+            readDuration: 0,
+            startReadTime: startReadTime / 1000
+        });
+    },
+    getArticleList(config) {
+        let url = '/blog/article/list';
+        return myAxios.post(url, config);
+    },
+    batchGetArticleMetaInfoAndCache(articleIdList) {
+        let url = '/blog/article/meta/batch';
+        myAxios.post(url, {articleIdList: articleIdList}).then(resp => {
+            let dataList = resp.data.data
+            // let promise = ;
+            dataList.forEach(item => {
+                metaInfoCache[item.articleId] = new Promise((resolve, reject) => {
+                    resolve({data: {data: item}});
+                })
+            })
+        })
+
     }
 
 

@@ -90,12 +90,7 @@ export default {
     saveStatisticsResult(id, startReadTime) {
       // 登录放云端，没登录放本地
       // 现在先放云端吧，也就我一个人用，肯定登录了的
-      let url = '/blog/user/recently-read'
-      this.$axios.put(url, {
-        articleId: id,
-        readDuration: 0,
-        startReadTime: startReadTime / 1000
-      }).then(response => {
+      this.$api.put(id,0, startReadTime).then(response => {
 
       })
     }

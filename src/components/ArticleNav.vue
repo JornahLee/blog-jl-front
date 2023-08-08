@@ -85,15 +85,13 @@ export default {
       }
     },
     getAllTag: function () {
-      let url = '/blog/meta/tag/list'
-      this.$axios.get(url).then(resp => {
-        this.tags = resp.data.data
+      this.$api.getSiteInfo().then(resp => {
+        this.tags = resp.data.data.tagList
       })
     },
     getAllCategory: function () {
-      let url = '/blog/meta/category/list'
-      this.$axios.get(url).then(resp => {
-        this.categories = resp.data.data
+      this.$api.getSiteInfo().then(resp => {
+        this.categories = resp.data.data.cateList
       })
     },
   },

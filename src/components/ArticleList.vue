@@ -21,6 +21,7 @@
 
 <script>
 import ArticleDescrip from "./blog/ArticleDescrip";
+
 export default {
   components: {ArticleDescrip},
   data() {
@@ -49,22 +50,21 @@ export default {
         pageNum: pageNum || 1,
         queryKeyColumns: {}
       }
-      let url;
       if (this.type === 'byTag') {
-        url = '/blog/article/list/byTag';
         config.queryKeyColumns.byTag = this.value
       } else if (this.type === 'byCate') {
-        url = '/blog/article/list/byCate';
         config.queryKeyColumns.byCate = this.value
-      } else {
-        url = '/blog/article/list';
       }
-      this.$axios.post(url, config).then(response => {
+      console.log('where you are')
+      this.$api.getArticleList(config).then(response => {
         const {list, pageSize, pageNum, total, hasNextPage} = response.data.data
         this.articleList = list
         this.pageSize = pageSize
         this.pageNum = pageNum
         this.total = total
+
+        let articleIdList = this.articleList.map(article => article.id)
+        this.$api.batchGetArticleMetaInfoAndCache(articleIdList)
       }).finally(() => {
         this.loading = false;
       })

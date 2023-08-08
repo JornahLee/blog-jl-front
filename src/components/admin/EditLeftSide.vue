@@ -74,14 +74,13 @@ export default {
     },
     getAllTag: function () {
       let url = '/blog/meta/tag/list'
-      this.$axios.get(url).then(resp => {
-        this.meta.tags = resp.data.data
+      this.$api.getSiteInfo().then(resp => {
+        this.meta.tags = resp.data.data.tagList
       })
     },
     getAllCategory: function () {
-      let url = '/blog/meta/category/list'
-      this.$axios.get(url).then(resp => {
-        this.meta.categories = resp.data.data
+      this.$api.getSiteInfo().then(resp => {
+        this.meta.categories = resp.data.data.cateList
       })
     },
     filterOption(input, option) {

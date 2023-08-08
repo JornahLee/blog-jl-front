@@ -50,10 +50,10 @@ export default {
     }
   },
   mounted() {
-    this.$api.getOwnerInfo()
+    this.$api.getSiteInfo()
         .then(response => {
           const {data} = response.data
-          this.userInfo = data;
+          this.userInfo = data.ownerInfo;
         })
     this.$api.yiyan()
         .then(({data}) => {

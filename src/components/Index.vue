@@ -57,16 +57,19 @@ export default {
     }
   },
   mounted() {
-    this.$api.getIndexStatsInfo()
+    this.$api.getSiteInfo()
         .then(response => {
           const {data} = response.data
-          this.statsInfoStrList = data;
+          this.statsInfoStrList = data.statsInfoList;
         })
     this.$api.getRecommendList(10)
         .then(response => {
           const {data} = response.data
           this.articleList = data
           this.loading = false
+
+          let articleIdList = this.articleList.map(article => article.id)
+          this.$api.batchGetArticleMetaInfoAndCache(articleIdList)
         })
   },
   methods: {}

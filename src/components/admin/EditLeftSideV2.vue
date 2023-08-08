@@ -118,15 +118,15 @@ export default {
   },
   methods: {
     getAllTag: function () {
-      this.$api.getAllTag()
+      this.$api.getSiteInfo()
           .then(resp => {
-            this.tags = resp.data.data
+            this.tags = resp.data.data.tagList
           })
     },
     getAllCategory: function () {
-      this.$api.getAllCategory()
+      this.$api.getSiteInfo()
           .then(resp => {
-            this.categories = resp.data.data
+            this.categories = resp.data.data.cateList
           })
     },
     newCate(cateName) {

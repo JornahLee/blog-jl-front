@@ -37,8 +37,7 @@ export default {
     },
     getRecentRead() {
       this.showRecentRead = true
-      let url = '/blog/user/recently-read'
-      this.$axios.get(url).then(resp => {
+      this.$api.getRecentRead().then(resp => {
         this.recentRead = resp.data.data
         console.log(this.recentRead);
       })
