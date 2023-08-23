@@ -36,10 +36,10 @@ export default {
         let params = {size: size}
         return getCache(apiCache, url, () => myAxios.get(url, {params}))
     },
-    getArticleMetaInfo(articleId) {
+    async getArticleMetaInfo(articleId) {
         //get cache 1st
         let url = `/blog/article/meta/${articleId}`
-        sleep(500)
+        await sleep(1000)
         return getCache(metaInfoCache, articleId, () => myAxios.get(url))
     },
     // getAllTag() {
