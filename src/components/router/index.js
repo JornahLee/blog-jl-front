@@ -58,7 +58,7 @@ const routes = [
     },
     {
         path: '/edit/:articleId', components: {
-            edit: () => import('../Edit.vue'),
+            edit: () => import('../admin/Edit.vue'),
             blank: () => import('../Blank.vue'),
             // editLeftSide: () => import('../admin/EditLeftSide.vue')
             editLeftSide: () => import('../admin/EditLeftSideV2.vue')
